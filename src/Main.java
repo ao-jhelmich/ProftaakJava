@@ -1,6 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        // Schrijf hier de code
+        Cube cube = new Cube();
+
+        System.out.println(cube.calculateVolume());
     }
 }
