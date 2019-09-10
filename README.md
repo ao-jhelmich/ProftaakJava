@@ -1,5 +1,8 @@
 # ProftaakJava
 
-** Documentatie Proftaak
+## Changelog
+- Renamed symbol to shape
 
-`` Kop 1
+## Roadmap
+- End this stupid project
+- Drink beer

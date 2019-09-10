@@ -1,3 +1,3 @@
-public interface Symbol {
+public interface Shape {
     double calculateVolume();
 }
