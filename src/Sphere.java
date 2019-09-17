@@ -1,5 +1,19 @@
 public class Sphere implements Shape {
-    public double calculateVolume() {
-        return 0.0;
+    private double radius;
+
+    public Sphere(double radius) {
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public double calculateVolume(double radius) {
+        return radius; //TODO Calculate volume with formula
     }
 }
