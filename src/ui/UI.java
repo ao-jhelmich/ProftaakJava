@@ -16,13 +16,9 @@ public class UI {
         f.getContentPane().add(BorderLayout.CENTER, textArea);
 
         final JButton button = new JButton("Add shape");
-        button.addActionListener(e -> {
-            new EditPane().run();
-        });
+        button.addActionListener(e -> new EditPane().run());
 
         f.getContentPane().add(BorderLayout.NORTH, button);
-
         f.setVisible(true);
     }
-
 }

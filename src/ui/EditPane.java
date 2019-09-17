@@ -7,11 +7,16 @@ import java.util.Collection;
 import java.util.List;
 
 public class EditPane {
+    private Collection<JComponent> componentList;
+
+    public EditPane() {
+        this.componentList = new ArrayList<>();
+    }
+
     public void run ()
     {
-        Collection<JComponent> componentList = new ArrayList<>();
-        JFrame f = new JFrame("Add sphere");
-        f.setSize(240, 270);
+        JFrame f = new JFrame("Add shape");
+        f.setSize(240, 250);
         f.setLocation(420, 350);
 
         ArrayList<String> shapeList = new ArrayList<>();
@@ -21,13 +26,16 @@ public class EditPane {
         shapeList.add("Sphere");
         shapeList.add("SquarePyramid");
 
-        JComboBox comboBox = new JComboBox(shapeList.toArray());
-        comboBox.setBounds(20,5,200,50);
-        componentList.add(comboBox);
+        JLabel shapeLabel = new JLabel("Shape type: ");
+        shapeLabel.setBounds(25,15,80,30);
+        componentList.add(shapeLabel);
 
-        comboBox.addActionListener(e -> {
-            String selectedSphere = (String) comboBox.getSelectedItem();
-            System.out.println("Selected sphere: "+ selectedSphere);
+        JComboBox shapeBox = new JComboBox(shapeList.toArray());
+        shapeBox.setBounds(105,5,110,50);
+        componentList.add(shapeBox);
+
+        shapeBox.addActionListener(e -> {
+            String selectedSphere = (String) shapeBox.getSelectedItem();
         });
 
         JLabel radiusLabel = new JLabel("Radius: ");
@@ -46,25 +54,28 @@ public class EditPane {
         widthfield.setBounds(85,85,130,30);
         componentList.add(widthfield);
 
-        JLabel heightLabel = new JLabel("Heigth: ");
-        heightLabel.setBounds(25,125,80,30);
+        JLabel heightLabel = new JLabel("Height: ");
+        heightLabel.setBounds(25,120,80,30);
         componentList.add(heightLabel);
 
         JTextField heightField = new JTextField();
-        heightField.setBounds(85,125,130,30);
+        heightField.setBounds(85,120,130,30);
         componentList.add(heightField);
 
         JLabel lengthLabel = new JLabel("Length: ");
-        lengthLabel.setBounds(25,160,80,30);
+        lengthLabel.setBounds(25,155,80,30);
         componentList.add(lengthLabel);
 
         JTextField lengthField = new JTextField();
-        lengthField.setBounds(85,160,130,30);
+        lengthField.setBounds(85,155,130,30);
         componentList.add(lengthField);
 
         final JButton button = new JButton("Save shape");
-        button.addActionListener(e -> System.out.println("Save"));
-        button.setBounds(85,200,130,30);
+        button.addActionListener(e -> {
+            f.setVisible( false);
+            System.out.println("Save");
+        });
+        button.setBounds(82,190,138,30);
         componentList.add(button);
 
         for (JComponent c: componentList) {
