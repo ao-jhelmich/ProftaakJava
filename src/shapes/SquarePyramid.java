@@ -1,3 +1,5 @@
+package shapes;
+
 public class SquarePyramid implements Shape {
     private double length;
 
@@ -37,5 +39,10 @@ public class SquarePyramid implements Shape {
 
     public double calculateVolume() {
         return 1/3 * length * width * height;
+    }
+
+    @Override
+    public String toString() {
+        return "squarePyramid:" + length + ":" + width + ":" + height;
     }
 }

@@ -1,3 +1,5 @@
+package shapes;
+
 public class Sphere implements Shape {
     private double radius;
 
@@ -15,5 +17,10 @@ public class Sphere implements Shape {
 
     public double calculateVolume() {
         return 4/3 * Math.PI * (radius * radius * radius);
+    }
+
+    @Override
+    public String toString() {
+        return "sphere:" + radius;
     }
 }
