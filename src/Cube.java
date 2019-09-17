@@ -35,7 +35,7 @@ public class Cube implements Shape {
         this.height = height;
     }
 
-    public double calculateVolume(double length, double width, double height) {
+    public double calculateVolume() {
         return length * width * height;
     }
 }

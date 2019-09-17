@@ -13,7 +13,7 @@ public class Sphere implements Shape {
         this.radius = radius;
     }
 
-    public double calculateVolume(double radius) {
-        return radius; //TODO Calculate volume with formula
+    public double calculateVolume() {
+        return 4/3 * Math.PI * (radius * radius * radius);
     }
 }
