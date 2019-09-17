@@ -35,7 +35,7 @@ public class SquarePyramid implements Shape {
         this.height = height;
     }
 
-    public double calculateVolume(double length, double width, double height) {
-        return length * width * height; //TODO Calculate volume with formula
+    public double calculateVolume() {
+        return 1/3 * length * width * height;
     }
 }

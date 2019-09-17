@@ -24,7 +24,7 @@ public class Cone implements Shape {
         this.height = height;
     }
 
-    public double calculateVolume(double radius, double height) {
-        return radius + height; //TODO Calculate volume with formula
+    public double calculateVolume() {
+        return 1/3 * Math.PI * (radius * radius) * height;
     }
 }
