@@ -72,7 +72,7 @@ public class EditPane {
 
         final JButton button = new JButton("Save shape");
         button.addActionListener(e -> {
-            f.setVisible( false);
+            f.setVisible(false);
             System.out.println("Save");
         });
         button.setBounds(82,190,138,30);
