@@ -3,8 +3,7 @@ package domain;
 import java.io.*;
 
 public class Writer {
-    private File file = new File("file.txt");
-    private PrintWriter printWriter = new PrintWriter(new FileWriter(file, true));
+    private PrintWriter printWriter;
 
     public void write(String value){
         this.printWriter.println(value);
@@ -15,6 +14,7 @@ public class Writer {
     }
 
     public Writer() throws IOException {
-
+        File file = new File("file.txt");
+        this.printWriter = new PrintWriter(new FileWriter(file, true));
     }
 }
