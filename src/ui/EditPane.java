@@ -1,10 +1,8 @@
 package ui;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class EditPane {
     private Collection<JComponent> componentList;
