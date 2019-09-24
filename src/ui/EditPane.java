@@ -29,7 +29,8 @@ public class EditPane {
         componentList.add(shapeLabel);
 
         JComboBox shapeBox = new JComboBox(shapeList.toArray());
-        shapeBox.setBounds(105,5,110,50);
+        shapeBox.setBounds(105,15,110,30);
+        shapeBox.setEditable(false);
         componentList.add(shapeBox);
 
         shapeBox.addActionListener(e -> {
