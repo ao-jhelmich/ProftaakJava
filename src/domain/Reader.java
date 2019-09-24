@@ -12,9 +12,13 @@ public class Reader {
 
     private Scanner reader;
 
-    public Reader() throws FileNotFoundException {
+    public Reader() {
         this.file = new File(filePath);
-        this.reader = new Scanner(file);
+        try {
+            this.reader = new Scanner(file);
+        } catch (FileNotFoundException exception) {
+            System.out.println(exception);
+        }
     }
 
     public ArrayList<Shape> readAll() {
