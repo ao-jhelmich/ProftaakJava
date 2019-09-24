@@ -26,7 +26,7 @@ public class ShapeDAO {
                         Double radius = resultset.getDouble("radius");
                         Double width = resultset.getDouble("width");
                         Double length = resultset.getDouble("length");
-                        Double heigth = resultset.getDouble("heigth");
+                        Double height = resultset.getDouble("height");
 
                         shapes.add(shapeType);
                     }
