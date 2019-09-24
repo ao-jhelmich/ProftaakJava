@@ -1,28 +1,35 @@
 package ui;
 
+import domain.Writer;
+import shapes.*;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class EditPane {
     private Collection<JComponent> componentList;
+    private Writer writer;
+    private JFrame parentFrame;
 
-    public EditPane() {
+    public EditPane(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
+        this.writer = new Writer();
         this.componentList = new ArrayList<>();
     }
 
     public void run ()
     {
         JFrame f = new JFrame("Add shape");
-        f.setSize(240, 250);
+        f.setSize(240, 280);
         f.setLocation(420, 350);
 
         ArrayList<String> shapeList = new ArrayList<>();
-        shapeList.add("Cone");
-        shapeList.add("Cube");
-        shapeList.add("Cylinder");
-        shapeList.add("Sphere");
-        shapeList.add("SquarePyramid");
+        shapeList.add("cone");
+        shapeList.add("cube");
+        shapeList.add("cylinder");
+        shapeList.add("sphere");
+        shapeList.add("squarePyramid");
 
         JLabel shapeLabel = new JLabel("Shape type: ");
         shapeLabel.setBounds(25,15,80,30);
@@ -71,8 +78,20 @@ public class EditPane {
 
         final JButton button = new JButton("Save shape");
         button.addActionListener(e -> {
-            f.setVisible(false);
+            String selectedShape = shapeBox.getSelectedItem().toString();
+            String radius = radiusField.getText();
+            String width = widthfield.getText();
+            String height = heightField.getText();
+            String length = lengthField.getText();
+
+            this.writer.writeShape(selectedShape, radius, height, length, width);
+
+            this.parentFrame.invalidate();
+            this.parentFrame.validate();
+            this.parentFrame.repaint();
+
             System.out.println("Save");
+            f.dispose();
         });
         button.setBounds(82,190,138,30);
         componentList.add(button);

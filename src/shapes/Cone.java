@@ -27,7 +27,7 @@ public class Cone implements Shape {
     }
 
     public double calculateVolume() {
-        return 1/3 * Math.PI * (radius * radius) * height;
+        return (1.0/3) * Math.PI * (radius * radius) * height;
     }
 
     @Override

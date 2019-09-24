@@ -38,7 +38,7 @@ public class SquarePyramid implements Shape {
     }
 
     public double calculateVolume() {
-        return 1/3 * length * width * height;
+        return (1.0/3) * length * width * height;
     }
 
     @Override
