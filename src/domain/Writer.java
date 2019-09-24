@@ -8,7 +8,7 @@ public class Writer {
     private PrintWriter printWriter;
 
     public void write(String value){
-        this.printWriter.println(value);
+        printWriter.println(value);
     }
 
     public void closeWriter(){
@@ -19,7 +19,7 @@ public class Writer {
         File file = new File("file.txt");
 
         try {
-            this.printWriter = new PrintWriter(new FileWriter(file, true));
+            printWriter = new PrintWriter(new FileWriter(file, true));
         } catch (IOException error) {
             System.out.println(error);
         }

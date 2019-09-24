@@ -1,25 +1,23 @@
 package ui;
 
 import domain.Writer;
-import shapes.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 
 public class EditPane {
-    private Collection<JComponent> componentList;
+    private HashMap<String, JComponent> componentList;
     private Writer writer;
     private JFrame parentFrame;
 
     public EditPane(JFrame parentFrame) {
         this.parentFrame = parentFrame;
         this.writer = new Writer();
-        this.componentList = new ArrayList<>();
+        this.componentList = new HashMap<>();
     }
 
-    public void run ()
-    {
+    public void run() {
         JFrame f = new JFrame("Add shape");
         f.setSize(240, 280);
         f.setLocation(420, 350);
@@ -31,76 +29,78 @@ public class EditPane {
         shapeList.add("sphere");
         shapeList.add("squarePyramid");
 
-        JLabel shapeLabel = new JLabel("Shape type: ");
-        shapeLabel.setBounds(25,15,80,30);
-        componentList.add(shapeLabel);
-
+        componentList.put("Shape type", newLabel("Shape type", 25, 15));
         JComboBox shapeBox = new JComboBox(shapeList.toArray());
-        shapeBox.setBounds(105,15,110,30);
+        shapeBox.setBounds(105, 15, 110, 30);
         shapeBox.setEditable(false);
-        componentList.add(shapeBox);
+        componentList.put("shapeBox", shapeBox);
 
         shapeBox.addActionListener(e -> {
-            String selectedSphere = (String) shapeBox.getSelectedItem();
+            String selectedSphere = shapeBox.getSelectedItem().toString();
         });
 
-        JLabel radiusLabel = new JLabel("Radius: ");
-        radiusLabel.setBounds(25,50,80,30);
-        componentList.add(radiusLabel);
+        componentList.put("Radius label", newLabel("Radius", 25, 50));
+        componentList.put("Radius textField", newTextField(85, 50));
 
-        JTextField radiusField = new JTextField();
-        radiusField.setBounds(85,50,130,30);
-        componentList.add(radiusField);
+        componentList.put("Width label", newLabel("Width", 25, 85));
+        componentList.put("Width textField", newTextField(85, 85));
 
-        JLabel widthLabel = new JLabel("Width: ");
-        widthLabel.setBounds(25,85,80,30);
-        componentList.add(widthLabel);
+        componentList.put("Height label", newLabel("Height", 25, 120));
+        componentList.put("Height textField", newTextField(85, 120));
 
-        JTextField widthfield = new JTextField();
-        widthfield.setBounds(85,85,130,30);
-        componentList.add(widthfield);
+        componentList.put("Length label", newLabel("Length", 25, 155));
+        componentList.put("Length textField", newTextField(85, 155));
 
-        JLabel heightLabel = new JLabel("Height: ");
-        heightLabel.setBounds(25,120,80,30);
-        componentList.add(heightLabel);
-
-        JTextField heightField = new JTextField();
-        heightField.setBounds(85,120,130,30);
-        componentList.add(heightField);
-
-        JLabel lengthLabel = new JLabel("Length: ");
-        lengthLabel.setBounds(25,155,80,30);
-        componentList.add(lengthLabel);
-
-        JTextField lengthField = new JTextField();
-        lengthField.setBounds(85,155,130,30);
-        componentList.add(lengthField);
-
-        final JButton button = new JButton("Save shape");
+        JButton button = new JButton("Save shape");
         button.addActionListener(e -> {
-            String selectedShape = shapeBox.getSelectedItem().toString();
-            String radius = radiusField.getText();
-            String width = widthfield.getText();
-            String height = heightField.getText();
-            String length = lengthField.getText();
+            writer.writeShape(shapeBox.getSelectedItem().toString(), getText("Radius textField"), getText("Width textField"), getText("Height textField"), getText("Length textField"));
 
-            this.writer.writeShape(selectedShape, radius, height, length, width);
-
-            this.parentFrame.invalidate();
-            this.parentFrame.validate();
-            this.parentFrame.repaint();
+            parentFrame.invalidate();
+            parentFrame.validate();
+            parentFrame.repaint();
 
             System.out.println("Save");
             f.dispose();
         });
-        button.setBounds(82,190,138,30);
-        componentList.add(button);
+        button.setBounds(82, 190, 138, 30);
+        componentList.put("Save shape", button);
 
-        for (JComponent c: componentList) {
+        show(f);
+    }
+
+    private JLabel newLabel(String label, int x, int y) {
+        JLabel radiusLabel = new JLabel(label + ": ");
+        radiusLabel.setBounds(x, y, 80, 30);
+        return radiusLabel;
+    }
+
+    private JLabel newLabel(String label, int x, int y, int width, int height) {
+        JLabel radiusLabel = new JLabel(label + ": ");
+        radiusLabel.setBounds(x, y, width, height);
+        return radiusLabel;
+    }
+
+    private JTextField newTextField(int x, int y) {
+        JTextField textField = new JTextField();
+        textField.setBounds(x, y, 130, 30);
+        return textField;
+    }
+
+    private void show(JFrame f) {
+        for (JComponent c : componentList.values()) {
             f.getContentPane().add(c);
         }
 
         f.setLayout(null);
         f.setVisible(true);
+    }
+
+    private String getText(String textField) {
+        if (componentList.containsKey(textField) && componentList.get(textField) instanceof JTextField) {
+            JTextField component = (JTextField) componentList.get(textField);
+            return component.getText();
+        } else {
+            return "";
+        }
     }
 }

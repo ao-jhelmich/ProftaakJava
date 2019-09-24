@@ -4,7 +4,6 @@ import domain.Reader;
 import shapes.Shape;
 
 import javax.swing.*;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,7 +12,7 @@ public class UI {
     private Reader reader;
     private Shape selectedShape;
 
-    public UI() throws FileNotFoundException {
+    public UI() {
         this.componentList = new ArrayList<>();
         this.reader = new Reader();
     }
@@ -32,9 +31,10 @@ public class UI {
         shapeResult.setBounds(10,200,150,20);
         componentList.add(shapeResult);
 
-        JList sphereList = new JList(this.reader.readAll().toArray());
+        JList sphereList = new JList(reader.readAll().toArray());
         sphereList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
+                System.out.println(sphereList.getSelectedValue());
                 selectedShape = (Shape) sphereList.getSelectedValue();
                 shapeResult.setText("" + selectedShape.calculateVolume());
             }
@@ -43,9 +43,12 @@ public class UI {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(sphereList);
         scrollPane.setBounds(10,50,380,100);
-
         componentList.add(scrollPane);
 
+        show(f);
+    }
+
+    private void show(JFrame f) {
         for (JComponent c: componentList) {
             f.getContentPane().add(c);
         }

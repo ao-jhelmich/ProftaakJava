@@ -27,7 +27,7 @@ public class Cylinder implements Shape {
     }
 
     public double calculateVolume() {
-        return radius + height; //TODO Calculate volume with formula
+        return Math.PI * (radius * radius) * height;
     }
 
     @Override
