@@ -1,3 +1,5 @@
+package domain;
+
 public class ShapeController {
     public void save(String name, String type) {
         //TODO Implement save method here

@@ -1,3 +1,5 @@
+package shapes;
+
 public class Cylinder implements Shape {
     private double radius;
 
@@ -26,5 +28,10 @@ public class Cylinder implements Shape {
 
     public double calculateVolume() {
         return radius + height; //TODO Calculate volume with formula
+    }
+
+    @Override
+    public String toString() {
+        return "cylinder:" + radius + ":" + height;
     }
 }

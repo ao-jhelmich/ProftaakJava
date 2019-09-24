@@ -1,3 +1,5 @@
+package shapes;
+
 public class Cube implements Shape {
     private double length;
 
@@ -37,5 +39,10 @@ public class Cube implements Shape {
 
     public double calculateVolume() {
         return length * width * height;
+    }
+
+    @Override
+    public String toString() {
+        return "cube:" + length + ":" + width + ":" + height;
     }
 }

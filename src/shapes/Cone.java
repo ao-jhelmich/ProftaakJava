@@ -1,3 +1,5 @@
+package shapes;
+
 public class Cone implements Shape {
     private double radius;
 
@@ -26,5 +28,10 @@ public class Cone implements Shape {
 
     public double calculateVolume() {
         return 1/3 * Math.PI * (radius * radius) * height;
+    }
+
+    @Override
+    public String toString() {
+        return "cone:" + radius + ":" + height;
     }
 }
