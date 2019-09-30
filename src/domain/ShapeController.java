@@ -21,19 +21,39 @@ public class ShapeController {
 
         switch(parts.get(0)) {
             case "cone":
-                shape = new Cone(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)));
+                if (parts.size() <= 1) {
+                    shape = new Cone(0, 0);
+                } else {
+                    shape = new Cone(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)));
+                }
                 break;
             case "cube":
-                shape = new Cube(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)), Double.parseDouble(parts.get(3)));
+                if (parts.size() <= 1) {
+                    shape = new Cube(0, 0, 0);
+                } else {
+                    shape = new Cube(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)), Double.parseDouble(parts.get(3)));
+                }
                 break;
             case "cylinder":
-                shape = new Cylinder(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)));
+                if (parts.size() <= 1) {
+                    shape = new Cylinder(0, 0);
+                } else {
+                    shape = new Cylinder(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)));
+                }
                 break;
             case "sphere":
-                shape = new Sphere(Double.parseDouble(parts.get(1)));
+                if (parts.size() <= 1) {
+                    shape = new Sphere(0);
+                } else {
+                    shape = new Sphere(Double.parseDouble(parts.get(1)));
+                }
                 break;
             case "squarePyramid":
-                shape = new SquarePyramid(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)), Double.parseDouble(parts.get(3)));
+                if (parts.size() <= 1) {
+                    shape = new SquarePyramid(0, 0, 0);
+                } else {
+                    shape = new SquarePyramid(Double.parseDouble(parts.get(1)), Double.parseDouble(parts.get(2)), Double.parseDouble(parts.get(3)));
+                }
                 break;
         }
 

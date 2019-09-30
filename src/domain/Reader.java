@@ -23,10 +23,12 @@ public class Reader {
 
     public ArrayList<Shape> readAll() {
         ArrayList<Shape> shapes = new ArrayList<>();
+        ShapeController shapeController = new ShapeController();
+
         while(reader.hasNextLine()) {
-            ShapeController shapeController = new ShapeController();
             shapes.add(shapeController.getShape(reader.nextLine()));
         }
+
         return shapes;
     }
 }

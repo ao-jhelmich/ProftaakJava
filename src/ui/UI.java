@@ -21,6 +21,7 @@ public class UI {
     {
         JFrame f = new JFrame("Sphere application");
         f.setSize(400, 300);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JButton button = new JButton("Add shape");
         button.setBounds(290,10,100,30);
@@ -34,7 +35,6 @@ public class UI {
         JList sphereList = new JList(reader.readAll().toArray());
         sphereList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                System.out.println(sphereList.getSelectedValue());
                 selectedShape = (Shape) sphereList.getSelectedValue();
                 shapeResult.setText("" + selectedShape.calculateVolume());
             }
