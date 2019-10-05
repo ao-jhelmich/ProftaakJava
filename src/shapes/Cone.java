@@ -1,6 +1,6 @@
 package shapes;
 
-import ui.EditPane;
+import ui.EditPanel;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -15,33 +15,17 @@ public class Cone implements Shape {
         this.height = height;
     }
 
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
     public double calculateVolume() {
         return (1.0 / 3) * Math.PI * (radius * radius) * height;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void addFormInputs(HashMap<String, JComponent> componentList) {
-        EditPane editPane = new EditPane(new JFrame());
-        componentList.put("Height label", editPane.newLabel("Height", 25, 120));
-        componentList.put("Height textField", editPane.newTextField(85, 120));
-        componentList.put("Radius label", editPane.newLabel("Radius", 25, 50));
-        componentList.put("Radius textField", editPane.newTextField(85, 50));
+        componentList.put("Height label", EditPanel.newLabel("Height", 25, 120));
+        componentList.put("Height textField", EditPanel.newTextField(85, 120));
+        componentList.put("Radius label", EditPanel.newLabel("Radius", 25, 50));
+        componentList.put("Radius textField", EditPanel.newTextField(85, 50));
     }
 
     @Override

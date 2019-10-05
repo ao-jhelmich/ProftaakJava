@@ -1,6 +1,6 @@
 package shapes;
 
-import ui.EditPane;
+import ui.EditPanel;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -18,45 +18,21 @@ public class Cube implements Shape {
         this.height = height;
     }
 
-    public double getLength() {
-        return length;
-    }
-
-    public void setLength(double length) {
-        this.length = length;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
     public double calculateVolume() {
         return length * width * height;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void addFormInputs(HashMap<String, JComponent> componentList) {
-        EditPane editPane = new EditPane(new JFrame());
-        componentList.put("Width label", editPane.newLabel("Width", 25, 85));
-        componentList.put("Width textField", editPane.newTextField(85, 85));
+        componentList.put("Width label", EditPanel.newLabel("Width", 25, 85));
+        componentList.put("Width textField", EditPanel.newTextField(85, 85));
 
-        componentList.put("Height label", editPane.newLabel("Height", 25, 120));
-        componentList.put("Height textField", editPane.newTextField(85, 120));
+        componentList.put("Height label", EditPanel.newLabel("Height", 25, 120));
+        componentList.put("Height textField", EditPanel.newTextField(85, 120));
 
-        componentList.put("Length label", editPane.newLabel("Length", 25, 155));
-        componentList.put("Length textField", editPane.newTextField(85, 155));
+        componentList.put("Length label", EditPanel.newLabel("Length", 25, 155));
+        componentList.put("Length textField", EditPanel.newTextField(85, 155));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package domain;
 
 import shapes.*;
-import ui.EditPane;
+import ui.EditPanel;
 
 import java.io.*;
 
@@ -18,8 +18,10 @@ public class Writer {
     }
 
     public Writer() {
-        File file = new File("file.txt");
+        this(new File("file.txt"));
+    }
 
+    public Writer(File file) {
         try {
             printWriter = new PrintWriter(new FileWriter(file, true));
         } catch (IOException error) {
@@ -27,41 +29,41 @@ public class Writer {
         }
     }
 
-    public void writeShape (Shape shape, EditPane editPane) {
+    public void writeShape (Shape shape, EditPanel editPanel) {
         if (shape instanceof Cone) {
             write(
                 new Cone(
-                    Double.parseDouble(editPane.getText("Radius textField")),
-                    Double.parseDouble(editPane.getText("Height textField"))
+                    Double.parseDouble(editPanel.getText("Radius textField")),
+                    Double.parseDouble(editPanel.getText("Height textField"))
                 ).toString()
             );
         } else if (shape instanceof Cube) {
             write(
                 new Cube(
-                    Double.parseDouble(editPane.getText("Length textField")),
-                    Double.parseDouble(editPane.getText("Width textField")),
-                    Double.parseDouble(editPane.getText("Height textField"))
+                    Double.parseDouble(editPanel.getText("Length textField")),
+                    Double.parseDouble(editPanel.getText("Width textField")),
+                    Double.parseDouble(editPanel.getText("Height textField"))
                 ).toString()
             );
         } else if (shape instanceof Cylinder) {
             write(
                 new Cylinder(
-                    Double.parseDouble(editPane.getText("Radius textField")),
-                    Double.parseDouble(editPane.getText("Height textField"))
+                    Double.parseDouble(editPanel.getText("Radius textField")),
+                    Double.parseDouble(editPanel.getText("Height textField"))
                 ).toString()
             );
         } else if (shape instanceof Sphere) {
             write(
                     new Sphere(
-                            Double.parseDouble(editPane.getText("Radius textField"))
+                            Double.parseDouble(editPanel.getText("Radius textField"))
                     ).toString()
             );
         } else if (shape instanceof SquarePyramid) {
             write(
                     new SquarePyramid(
-                            Double.parseDouble(editPane.getText("Length textField")),
-                            Double.parseDouble(editPane.getText("Width textField")),
-                            Double.parseDouble(editPane.getText("Height textField"))
+                            Double.parseDouble(editPanel.getText("Length textField")),
+                            Double.parseDouble(editPanel.getText("Width textField")),
+                            Double.parseDouble(editPanel.getText("Height textField"))
                     ).toString()
             );
         }
