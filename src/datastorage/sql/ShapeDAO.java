@@ -1,6 +1,7 @@
-package datastorage;
+package datastorage.sql;
 
-import shapes.Shape;
+import datastorage.DataStorageInterface;
+import shapes.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShapeDAO {
+public class ShapeDAO implements DataStorageInterface {
     private DatabaseConnection connection;
 
     public ShapeDAO() {
@@ -45,16 +46,23 @@ public class ShapeDAO {
         return shapes;
     }
 
-    public void saveShape(String selectedShape, String radius, String height, String length, String width) {
+    @Override
+    public void writeShape(Shape shape) {
+        //TODO Fix
         if (connection.openConnection()) {
             String query = "INSERT INTO shapes ";
             HashMap<Integer, String> params = new HashMap<>();
 
-            if (selectedShape.equals("cone") || selectedShape.equals("cylinder")) {
+            if (shape instanceof Cone || shape instanceof Cylinder) {
                 query += "(type, radius, height) VALUES (?, ?, ?);";
-                params.put(1, selectedShape);
-                params.put(2, radius);
-                params.put(3, height);
+                params.put(1, shape.getClass().toString().toLowerCase());
+                if (shape instanceof Cone) {
+                    params.put(2, ((Cone) shape).getRadius());
+                    params.put(3, ((Cone) shape).getHeight());
+                } else {
+                    params.put(2, ((Cylinder) shape).getRadius());
+                    params.put(3, ((Cylinder) shape).getHeight());
+                }
             } else if(selectedShape.equals("cube") || selectedShape.equals("squarePyramid")) {
                 query += "(type, length, width, height) VALUES (?, ?, ?, ?);";
                 params.put(1, selectedShape);

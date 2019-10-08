@@ -14,7 +14,7 @@ public class UIPanel extends JPanel implements UpdatableView {
     private UIFrame uiFrame;
     private ShapeController shapeController;
 
-    private JList sphereList;
+    private JList<Shape> sphereList;
     private JTextArea shapeTextArea;
     private JTextArea totalTextArea;
 

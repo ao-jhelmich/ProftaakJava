@@ -1,6 +1,6 @@
-package datastorage;
+package datastorage.sql;
 
-import domain.Reader;
+import datastorage.txt.Reader;
 
 import java.io.File;
 import java.sql.*;
@@ -9,18 +9,17 @@ import java.util.HashMap;
 public class DatabaseConnection {
     private Connection connection;
     private Statement statement;
-    private Reader reader;
 
     public DatabaseConnection() {
-        reader = new Reader(new File("./conf.properties"));
         connection = null;
         statement = null;
     }
 
     public boolean openConnection() {
         boolean result = false;
+        Reader reader = new Reader(new File("./conf.properties"));
 
-        HashMap<String, String> properties = this.reader.readProperties();
+        HashMap<String, String> properties = reader.readProperties();
         String url = "jdbc:mysql://"+ properties.getOrDefault("DB_HOST", "localhost") +"/"+ properties.getOrDefault("DB_NAME", "proftaakjava") +"?" + properties.getOrDefault("DB_OPTIONS", "serverTimezone=UTC");
 
         if (connection == null) {
@@ -34,11 +33,11 @@ public class DatabaseConnection {
 
                 result = true;
             } catch (SQLException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 result = false;
             }
         } else {
-            // A connection was already initalized.
+            // A connection was already initialized.
             result = true;
         }
 
@@ -52,7 +51,7 @@ public class DatabaseConnection {
             try {
                 open = !connection.isClosed() && !statement.isClosed();
             } catch (SQLException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 open = false;
             }
         }
@@ -69,7 +68,7 @@ public class DatabaseConnection {
             // Close the connection
             connection.close();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -83,7 +82,7 @@ public class DatabaseConnection {
             try {
                 resultset = statement.executeQuery(query);
             } catch (SQLException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 resultset = null;
             }
         }
@@ -121,7 +120,7 @@ public class DatabaseConnection {
                 statement.executeUpdate();
                 result = true;
             } catch (SQLException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 result = false;
             }
         }

@@ -1,5 +1,6 @@
-package domain;
+package datastorage.txt;
 
+import domain.ShapeController;
 import shapes.*;
 
 import java.io.Closeable;
@@ -11,12 +12,7 @@ public class Reader implements Closeable {
     private Scanner reader;
 
     public Reader() {
-        File file = new File("file.txt");
-        try {
-            this.reader = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        this(new File("file.txt"));
     }
 
     public Reader(File file) {

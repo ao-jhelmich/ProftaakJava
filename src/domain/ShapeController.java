@@ -1,13 +1,15 @@
 package domain;
 
-import datastorage.ShapeDAO;
+import datastorage.txt.*;
 import shapes.*;
-import shapes.Shape;
 import ui.EditPanel;
 import ui.StorageFrame;
 
 import javax.swing.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,8 +67,8 @@ public class ShapeController {
         return shape;
     }
 
-    public void writeShape(Shape shape, EditPanel editPanel) {
-        writer.writeShape(shape, editPanel);
+    public void writeShape(Shape shape) {
+        writer.writeShape(shape);
     }
 
     public void deleteShape(int selectedIndex) {
@@ -77,7 +79,7 @@ public class ShapeController {
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
-            Writer writer = new Writer(tempFile);
+            datastorage.txt.Writer writer = new Writer(tempFile);
 
             String currentLine;
             int count = 0;
@@ -99,11 +101,11 @@ public class ShapeController {
             exception.printStackTrace();
         }
 
-        reader = new Reader();
+        reader = new datastorage.txt.Reader();
     }
 
     public ArrayList<Shape> getShapeList() {
-        reader = new Reader();
+        reader = new datastorage.txt.Reader();
         return reader.readAll();
     }
 

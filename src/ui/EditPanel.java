@@ -56,6 +56,7 @@ public class EditPanel extends JPanel implements UpdatableView {
         ActionPanel(EditPanel editPanel) {
             JButton button = new JButton("Save shape");
             button.addActionListener(e -> {
+                System.out.println(shapeBox.getSelectedItem().toString());
                 Shape shape = shapeController.getShape(shapeBox.getSelectedItem().toString());
                 shapeController.writeShape(shape, editPanel);
 
