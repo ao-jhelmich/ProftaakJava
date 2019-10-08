@@ -1,5 +1,6 @@
 package domain;
 
+import datastorage.ShapeDAO;
 import shapes.*;
 import shapes.Shape;
 import ui.EditPanel;

@@ -1,13 +1,18 @@
 package datastorage;
 
+import domain.Reader;
+
+import java.io.File;
 import java.sql.*;
 import java.util.HashMap;
 
 public class DatabaseConnection {
     private Connection connection;
     private Statement statement;
+    private Reader reader;
 
     public DatabaseConnection() {
+        reader = new Reader(new File("./conf.properties"));
         connection = null;
         statement = null;
     }
@@ -15,11 +20,13 @@ public class DatabaseConnection {
     public boolean openConnection() {
         boolean result = false;
 
+        HashMap<String, String> properties = this.reader.readProperties();
+        String url = "jdbc:mysql://"+ properties.getOrDefault("DB_HOST", "localhost") +"/"+ properties.getOrDefault("DB_NAME", "proftaakjava") +"?" + properties.getOrDefault("DB_OPTIONS", "serverTimezone=UTC");
+
         if (connection == null) {
             try {
                 // Try to create a connection with the library database
-                connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost/proftaakjava?serverTimezone=UTC", "root", "");
+                connection = DriverManager.getConnection(url, properties.getOrDefault("DB_USER", "root"), properties.getOrDefault("DB_PASS", ""));
 
                 if (connection != null) {
                     statement = connection.createStatement();
