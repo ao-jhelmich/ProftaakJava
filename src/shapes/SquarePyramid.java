@@ -1,5 +1,10 @@
 package shapes;
 
+import ui.EditPanel;
+
+import javax.swing.*;
+import java.util.HashMap;
+
 public class SquarePyramid implements Shape {
     private double length;
 
@@ -13,32 +18,21 @@ public class SquarePyramid implements Shape {
         this.height = height;
     }
 
-    public double getLength() {
-        return length;
-    }
-
-    public void setLength(double length) {
-        this.length = length;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
     public double calculateVolume() {
-        return (1.0/3) * length * width * height;
+        return (1.0 / 3) * length * width * height;
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Override
+    public void addFormInputs(HashMap<String, JComponent> componentList) {
+        componentList.put("Width label", EditPanel.newLabel("Width", 25, 85));
+        componentList.put("Width textField", EditPanel.newTextField(85, 85));
+
+        componentList.put("Height label", EditPanel.newLabel("Height", 25, 120));
+        componentList.put("Height textField", EditPanel.newTextField(85, 120));
+
+        componentList.put("Length label", EditPanel.newLabel("Length", 25, 155));
+        componentList.put("Length textField", EditPanel.newTextField(85, 155));
     }
 
     @Override

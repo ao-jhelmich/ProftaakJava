@@ -66,7 +66,7 @@ public class ShapeDAO {
                 params.put(1, selectedShape);
                 params.put(2, radius);
             }
-            
+
             try {
                 System.out.println(connection.executeSqlDmlStatement(query, params));
             } catch (SQLException e) {
