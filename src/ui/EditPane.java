@@ -1,5 +1,6 @@
 package ui;
 
+import datastorage.ShapeDAO;
 import domain.Writer;
 
 import javax.swing.*;
@@ -10,10 +11,12 @@ public class EditPane {
     private HashMap<String, JComponent> componentList;
     private Writer writer;
     private JFrame parentFrame;
+    private ShapeDAO dao;
 
     public EditPane(JFrame parentFrame) {
         this.parentFrame = parentFrame;
         this.writer = new Writer();
+        this.dao = new ShapeDAO();
         this.componentList = new HashMap<>();
     }
 
@@ -54,6 +57,7 @@ public class EditPane {
         JButton button = new JButton("Save shape");
         button.addActionListener(e -> {
             writer.writeShape(shapeBox.getSelectedItem().toString(), getText("Radius textField"), getText("Width textField"), getText("Height textField"), getText("Length textField"));
+            dao.saveShape(shapeBox.getSelectedItem().toString(), getText("Radius textField"), getText("Width textField"), getText("Height textField"), getText("Length textField"));
 
             parentFrame.invalidate();
             parentFrame.validate();

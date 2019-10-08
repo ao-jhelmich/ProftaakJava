@@ -5,16 +5,19 @@ import shapes.Shape;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShapeDAO {
+    private DatabaseConnection connection;
+
     public ShapeDAO() {
+        this.connection = new DatabaseConnection();
     }
 
     public List<String> all() {
         List<String> shapes = new ArrayList<>();
 
-        DatabaseConnection connection = new DatabaseConnection();
         if (connection.openConnection()) {
             ResultSet resultset = connection.executeSQLSelectStatement(
                     "SELECT * FROM shapes;");
@@ -40,5 +43,37 @@ public class ShapeDAO {
         }
 
         return shapes;
+    }
+
+    public void saveShape(String selectedShape, String radius, String height, String length, String width) {
+        if (connection.openConnection()) {
+            String query = "INSERT INTO shapes ";
+            HashMap<Integer, String> params = new HashMap<>();
+
+            if (selectedShape.equals("cone") || selectedShape.equals("cylinder")) {
+                query += "(type, radius, height) VALUES (?, ?, ?);";
+                params.put(1, selectedShape);
+                params.put(2, radius);
+                params.put(3, height);
+            } else if(selectedShape.equals("cube") || selectedShape.equals("squarePyramid")) {
+                query += "(type, length, width, height) VALUES (?, ?, ?, ?);";
+                params.put(1, selectedShape);
+                params.put(2, length);
+                params.put(3, width);
+                params.put(4, height);
+            } else {
+                query += "(type, radius) VALUES (?, ?);";
+                params.put(1, selectedShape);
+                params.put(2, radius);
+            }
+            
+            try {
+                System.out.println(connection.executeSqlDmlStatement(query, params));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            connection.closeConnection();
+        }
     }
 }

@@ -6,3 +6,12 @@ cone:5.0:4.0
 cone:7.0:7.0
 cone:8.0:8.0
 cone:7.0:7.0
+sphere:5.0
+sphere:5.0
+sphere:5.0
+sphere:2.0
+sphere:6.0
+sphere:5.0
+sphere:3.0
+sphere:4.0
+sphere:4.0

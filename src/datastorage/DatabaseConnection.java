@@ -1,6 +1,7 @@
 package datastorage;
 
 import java.sql.*;
+import java.util.HashMap;
 
 public class DatabaseConnection {
     private Connection connection;
@@ -86,18 +87,31 @@ public class DatabaseConnection {
     /**
      * Dml: data manipulation language
      * @param query The SQL query that will be executed
+     * @param params
      * @return true if execution of the SQL statement was successful, false
      * otherwise.
      */
-    public boolean executeSqlDmlStatement(String query) {
+    public boolean executeSqlDmlStatement(String query, HashMap<Integer, String> params) throws SQLException {
         boolean result = false;
 
-        // First, check whether a some query was passed and the connection with
-        // the database.
         if (query != null && connectionIsOpen()) {
-            // Then, if succeeded, execute the query.
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            params.forEach((k, v) -> {
+                try {
+                    if (v.matches("-?\\d+")) {
+                        statement.setInt(k, Integer.parseInt(v));
+                    } else {
+                        statement.setString(k, v);
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+            System.out.println(statement);
             try {
-                statement.executeUpdate(query);
+                statement.executeUpdate();
                 result = true;
             } catch (SQLException e) {
                 System.out.println(e);
@@ -106,5 +120,8 @@ public class DatabaseConnection {
         }
 
         return result;
+    }
+
+    public void executeSQLInsertStatement() {
     }
 }
