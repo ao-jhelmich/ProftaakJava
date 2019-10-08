@@ -7,6 +7,8 @@ import shapes.Shape;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UIPanel extends JPanel implements UpdatableView {
     private UIFrame uiFrame;
@@ -21,6 +23,15 @@ public class UIPanel extends JPanel implements UpdatableView {
             setLayout(new BorderLayout());
 
             sphereList = new JList(shapeController.getShapeList().toArray());
+            sphereList.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent evt) {
+                    JList list = (JList) evt.getSource();
+                    if (evt.getClickCount() == 2) {
+                        Shape selectedShape = (Shape) sphereList.getSelectedValue();
+                        //TODO EDIT FRAME
+                    }
+                }
+            });
             sphereList.addListSelectionListener(e -> {
                 if (!e.getValueIsAdjusting()) {
                     Shape selectedShape = (Shape) sphereList.getSelectedValue();
@@ -42,7 +53,7 @@ public class UIPanel extends JPanel implements UpdatableView {
     }
 
     private class ButtonPanel extends JPanel {
-        ButtonPanel() {
+        ButtonPanel(UIPanel uiPanel) {
             GroupLayout layout = new GroupLayout(this);
             setLayout(layout);
             layout.setAutoCreateGaps(true);
@@ -50,7 +61,10 @@ public class UIPanel extends JPanel implements UpdatableView {
             JButton addButton = new JButton("Add shape");
             addButton.addActionListener(e -> new EditFrame(uiFrame, shapeController));
             JButton deleteButton = new JButton("Delete shape");
-            deleteButton.addActionListener(e -> shapeController.deleteShape(sphereList.getSelectedIndex()));
+            deleteButton.addActionListener(e -> {
+                shapeController.deleteShape(sphereList.getSelectedIndex());
+                uiPanel.updateView();
+            });
             JButton calculateButton = new JButton("Calculate total volume");
             calculateButton.addActionListener(e -> totalTextArea.setText("" + shapeController.calculateTotalVolume()));
 
@@ -150,7 +164,7 @@ public class UIPanel extends JPanel implements UpdatableView {
         c.weighty = 0.0; //These only take their own space
         c.gridx = 0;
         c.gridy = 1;
-        add(new ButtonPanel(), c);
+        add(new ButtonPanel(this), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(30,0,0,0);  //Top padding

@@ -5,10 +5,12 @@ import domain.UpdatableView;
 import shapes.*;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EditPanel extends JPanel implements UpdatableView {
+    private UIFrame uiFrame;
     private EditFrame editFrame;
     private ShapeController shapeController;
 
@@ -40,7 +42,37 @@ public class EditPanel extends JPanel implements UpdatableView {
         }
     }
 
+    private class InputPanel {
+        InputPanel() {
+            componentList.put("Radius label", new Label("Radius:"));
+            componentList.put("Radius textField", newTextField(85, 50));
+
+            componentList.put("Height label", new Label("Height:"));
+            componentList.put("Height textField", newTextField(85, 120));
+        }
+    }
+
+    private class ActionPanel {
+        ActionPanel(EditPanel editPanel) {
+            JButton button = new JButton("Save shape");
+            button.addActionListener(e -> {
+                Shape shape = shapeController.getShape(shapeBox.getSelectedItem().toString());
+                shapeController.writeShape(shape, editPanel);
+
+                uiFrame.invalidate();
+                uiFrame.validate();
+                uiFrame.repaint();
+
+                System.out.println("Save");
+                editFrame.dispose();
+            });
+            button.setBounds(82, 190, 138, 30);
+            componentList.put("Save shape", button);
+        }
+    }
+
     public EditPanel(UIFrame uiFrame, EditFrame editFrame, ShapeController shapeController) {
+        this.uiFrame = uiFrame;
         this.editFrame = editFrame;
         this.shapeController = shapeController;
 
@@ -48,26 +80,9 @@ public class EditPanel extends JPanel implements UpdatableView {
 
         new ShapeBox();
 
-        componentList.put("Radius label", new Label("Radius:"));
-        componentList.put("Radius textField", newTextField(85, 50));
+        new InputPanel();
 
-        componentList.put("Height label", new Label("Height:"));
-        componentList.put("Height textField", newTextField(85, 120));
-
-        JButton button = new JButton("Save shape");
-        button.addActionListener(e -> {
-            Shape shape = shapeController.getShape(shapeBox.getSelectedItem().toString());
-            shapeController.writeShape(shape, this);
-
-            uiFrame.invalidate();
-            uiFrame.validate();
-            uiFrame.repaint();
-
-            System.out.println("Save");
-            editFrame.dispose();
-        });
-        button.setBounds(82, 190, 138, 30);
-        componentList.put("Save shape", button);
+        new ActionPanel(this);
 
         updateView();
     }
