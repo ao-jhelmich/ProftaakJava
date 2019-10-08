@@ -4,4 +4,4 @@ cone:2.0:3.5
 cube:2.0:2.0:2.0
 squarePyramid:2.0:2.0:3.0
 cube:1.0:1.0:1.0
-cube:1.0:1.0:2.0
+cube:1.0:1.0:2.0sphere:5.0
