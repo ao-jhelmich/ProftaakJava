@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 public class UIPanel extends JPanel implements UpdatableView {
     private UIFrame uiFrame;
     private ShapeController shapeController;
+    private EditFrame editFrame;
 
     private JList<Shape> sphereList;
     private JTextArea shapeTextArea;
@@ -25,16 +26,18 @@ public class UIPanel extends JPanel implements UpdatableView {
             sphereList = new JList(shapeController.getShapeList().toArray());
             sphereList.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent evt) {
-                    JList list = (JList) evt.getSource();
                     if (evt.getClickCount() == 2) {
-                        Shape selectedShape = (Shape) sphereList.getSelectedValue();
-                        //TODO EDIT FRAME
+                        Shape selectedShape = sphereList.getSelectedValue();
+                        if (editFrame != null) {
+                            editFrame.dispose();
+                        }
+                        editFrame = new EditFrame(uiFrame, shapeController, selectedShape);
                     }
                 }
             });
             sphereList.addListSelectionListener(e -> {
                 if (!e.getValueIsAdjusting()) {
-                    Shape selectedShape = (Shape) sphereList.getSelectedValue();
+                    Shape selectedShape = sphereList.getSelectedValue();
                     shapeTextArea.setText("" + (double) Math.round(selectedShape.calculateVolume() * 100) / 100);
                 }
             });
@@ -59,10 +62,16 @@ public class UIPanel extends JPanel implements UpdatableView {
             layout.setAutoCreateGaps(true);
 
             JButton addButton = new JButton("Add shape");
-            addButton.addActionListener(e -> new EditFrame(uiFrame, shapeController));
+            addButton.addActionListener(e -> {
+                if (editFrame != null) {
+                    editFrame.dispose();
+                }
+                editFrame = new EditFrame(uiFrame, shapeController);
+            });
+
             JButton deleteButton = new JButton("Delete shape");
             deleteButton.addActionListener(e -> {
-                shapeController.deleteShape(sphereList.getSelectedIndex());
+                shapeController.deleteShape(sphereList.getSelectedValue());
                 uiPanel.updateView();
             });
             JButton calculateButton = new JButton("Calculate total volume");

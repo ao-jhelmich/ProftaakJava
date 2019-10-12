@@ -37,12 +37,16 @@ public class StoragePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonDb) {
-            System.out.println("Button DB pressed");
+            shapeController.setDataOption("db");
         } else if (e.getSource() == buttonTxt) {
-            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose();
-            new UIFrame(shapeController);
+            shapeController.setDataOption("txt");
         } else if (e.getSource() == buttonJson) {
-            System.out.println("Button Json pressed");
+            shapeController.setDataOption("json");
+        }
+
+        if (e.getSource() == buttonDb || e.getSource() == buttonTxt || e.getSource() == buttonJson) {
+            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); //Close Parent Frame
+            new UIFrame(shapeController); //Open new UIFrame
         }
     }
 }

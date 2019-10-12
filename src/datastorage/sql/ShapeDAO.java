@@ -49,6 +49,7 @@ public class ShapeDAO implements DataStorageInterface {
     @Override
     public void writeShape(Shape shape) {
         //TODO Fix
+        /*
         if (connection.openConnection()) {
             String query = "INSERT INTO shapes ";
             HashMap<Integer, String> params = new HashMap<>();
@@ -83,5 +84,6 @@ public class ShapeDAO implements DataStorageInterface {
 
             connection.closeConnection();
         }
+        */
     }
 }

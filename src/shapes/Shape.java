@@ -1,9 +1,10 @@
 package shapes;
 
-import javax.swing.*;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public interface Shape {
+    int getId();
+    String getType();
     double calculateVolume();
-    void addFormInputs(HashMap<String, JComponent> componentList);
+    ArrayList<String> getFormInputs();
 }

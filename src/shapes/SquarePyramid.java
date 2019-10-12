@@ -1,21 +1,44 @@
 package shapes;
 
-import ui.EditPanel;
-
-import javax.swing.*;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class SquarePyramid implements Shape {
+    private final static String type = "squarePyramid";
+    private int id;
     private double length;
-
     private double width;
-
     private double height;
 
     public SquarePyramid(double length, double width, double height) {
+        this(0, length, width, height);
+    }
+
+    public SquarePyramid(int id, double length, double width, double height) {
+        this.id = id;
         this.length = length;
         this.width = width;
         this.height = height;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     public double calculateVolume() {
@@ -24,19 +47,16 @@ public class SquarePyramid implements Shape {
 
     @SuppressWarnings("Duplicates")
     @Override
-    public void addFormInputs(HashMap<String, JComponent> componentList) {
-        componentList.put("Width label", EditPanel.newLabel("Width", 25, 85));
-        componentList.put("Width textField", EditPanel.newTextField(85, 85));
-
-        componentList.put("Height label", EditPanel.newLabel("Height", 25, 120));
-        componentList.put("Height textField", EditPanel.newTextField(85, 120));
-
-        componentList.put("Length label", EditPanel.newLabel("Length", 25, 155));
-        componentList.put("Length textField", EditPanel.newTextField(85, 155));
+    public ArrayList<String> getFormInputs() {
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add("Length:");
+        labels.add("Width:");
+        labels.add("Height:");
+        return labels;
     }
 
     @Override
     public String toString() {
-        return "squarePyramid:" + length + ":" + width + ":" + height;
+        return id + ":" + type + ":" + length + ":" + width + ":" + height;
     }
 }

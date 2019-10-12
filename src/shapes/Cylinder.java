@@ -1,35 +1,54 @@
 package shapes;
 
-import ui.EditPanel;
-
-import javax.swing.*;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Cylinder implements Shape {
+    private final static String type = "cylinder";
+    private int id;
     private double radius;
-
     private double height;
 
     public Cylinder(double radius, double height) {
+       this(0, radius, height);
+    }
+
+    public Cylinder(int id, double radius, double height) {
+        this.id = id;
         this.radius = radius;
         this.height = height;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     public double calculateVolume() {
         return Math.PI * (radius * radius) * height;
     }
 
-    @SuppressWarnings("Duplicates")
     @Override
-    public void addFormInputs(HashMap<String, JComponent> componentList) {
-        componentList.put("Height label", EditPanel.newLabel("Height", 25, 120));
-        componentList.put("Height textField", EditPanel.newTextField(85, 120));
-        componentList.put("Radius label", EditPanel.newLabel("Radius", 25, 50));
-        componentList.put("Radius textField", EditPanel.newTextField(85, 50));
+    public ArrayList<String> getFormInputs() {
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add("Height:");
+        labels.add("Radius:");
+        return labels;
     }
 
     @Override
     public String toString() {
-        return "cylinder:" + radius + ":" + height;
+        return id + ":" + type + ":" + radius + ":" + height;
     }
 }
