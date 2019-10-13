@@ -16,7 +16,7 @@ public class DatabaseConnection {
     }
 
     public boolean openConnection() {
-        boolean result = false;
+        boolean isConnected = false;
         Reader reader = new Reader(new File("./conf.properties"));
 
         HashMap<String, String> properties = reader.readProperties();
@@ -31,17 +31,17 @@ public class DatabaseConnection {
                     statement = connection.createStatement();
                 }
 
-                result = true;
+                isConnected = true;
             } catch (SQLException e) {
                 e.printStackTrace();
-                result = false;
+                isConnected = false;
             }
         } else {
             // A connection was already initialized.
-            result = true;
+            isConnected = true;
         }
 
-        return result;
+        return isConnected;
     }
 
     public boolean connectionIsOpen() {

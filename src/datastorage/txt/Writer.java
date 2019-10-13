@@ -34,6 +34,11 @@ public class Writer implements DataStorageInterface {
         closeWriter();
     }
 
+    @Override
+    public void deleteShape(Shape shape) {
+        // TODO
+    }
+
     public Reader deleteShape(Shape shape, Reader reader) {
         File inputFile = new File("file.txt");
         File tempFile = new File("temp.txt");

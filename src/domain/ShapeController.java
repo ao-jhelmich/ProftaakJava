@@ -1,5 +1,6 @@
 package domain;
 
+import datastorage.sql.ShapeDAO;
 import datastorage.txt.Reader;
 import datastorage.txt.Writer;
 import shapes.Shape;
@@ -55,9 +56,15 @@ public class ShapeController {
     }
 
     public Shape getShape(String shapeString, ArrayList<Component> components) {
-        //TODO Return shape object based on values inside components
-        // Check for Latest ID?
-        return new Sphere(0);
+        StringBuilder shape = new StringBuilder("0:").append(shapeString);
+
+        for (Component c: components) {
+            if (c instanceof JTextField) {
+                shape.append(":").append(((JTextField) c).getText());
+            }
+        }
+
+        return getShape(shape.toString());
     }
 
     public Shape getEmptyShape(String shapeString) {
@@ -88,10 +95,12 @@ public class ShapeController {
     }
 
     public void writeShape(Shape shape) {
+        System.out.println(shape);
         if (dataOption != null) {
             switch (dataOption) {
                 case "db":
-                    //TODO Implement write to db here
+                    new ShapeDAO().writeShape(shape);
+                    // Todo reload list of all shapes
                     break;
                 case "txt":
                     writer.writeShape(shape);
@@ -107,7 +116,7 @@ public class ShapeController {
         if (dataOption != null) {
             switch (dataOption) {
                 case "db":
-                    //TODO Implement delete from db here
+                    new ShapeDAO().deleteShape(shape);
                     break;
                 case "txt":
                     reader = writer.deleteShape(shape, reader);
@@ -123,8 +132,7 @@ public class ShapeController {
         if (dataOption != null) {
             switch (dataOption) {
                 case "db":
-                    //TODO Implement get all Shapes from db here
-                    return new ArrayList<>();
+                    return new ShapeDAO().all();
                 case "txt":
                     reader = new Reader();
                     return reader.readAll();
