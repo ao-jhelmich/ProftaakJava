@@ -1,6 +1,10 @@
-package datastorage;
+package datastorage.sql;
 
+import datastorage.txt.Reader;
+
+import java.io.File;
 import java.sql.*;
+import java.util.HashMap;
 
 public class DatabaseConnection {
     private Connection connection;
@@ -12,29 +16,32 @@ public class DatabaseConnection {
     }
 
     public boolean openConnection() {
-        boolean result = false;
+        boolean isConnected = false;
+        Reader reader = new Reader(new File("./conf.properties"));
+
+        HashMap<String, String> properties = reader.readProperties();
+        String url = "jdbc:mysql://"+ properties.getOrDefault("DB_HOST", "localhost") +"/"+ properties.getOrDefault("DB_NAME", "proftaakjava") +"?" + properties.getOrDefault("DB_OPTIONS", "serverTimezone=UTC");
 
         if (connection == null) {
             try {
                 // Try to create a connection with the library database
-                connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost/proftaakjava?serverTimezone=UTC", "root", "");
+                connection = DriverManager.getConnection(url, properties.getOrDefault("DB_USER", "root"), properties.getOrDefault("DB_PASS", ""));
 
                 if (connection != null) {
                     statement = connection.createStatement();
                 }
 
-                result = true;
+                isConnected = true;
             } catch (SQLException e) {
-                System.out.println(e);
-                result = false;
+                e.printStackTrace();
+                isConnected = false;
             }
         } else {
-            // A connection was already initalized.
-            result = true;
+            // A connection was already initialized.
+            isConnected = true;
         }
 
-        return result;
+        return isConnected;
     }
 
     public boolean connectionIsOpen() {
@@ -44,7 +51,7 @@ public class DatabaseConnection {
             try {
                 open = !connection.isClosed() && !statement.isClosed();
             } catch (SQLException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 open = false;
             }
         }
@@ -61,7 +68,7 @@ public class DatabaseConnection {
             // Close the connection
             connection.close();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -75,7 +82,7 @@ public class DatabaseConnection {
             try {
                 resultset = statement.executeQuery(query);
             } catch (SQLException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 resultset = null;
             }
         }
@@ -86,25 +93,41 @@ public class DatabaseConnection {
     /**
      * Dml: data manipulation language
      * @param query The SQL query that will be executed
+     * @param params
      * @return true if execution of the SQL statement was successful, false
      * otherwise.
      */
-    public boolean executeSqlDmlStatement(String query) {
+    public boolean executeSqlDmlStatement(String query, HashMap<Integer, String> params) throws SQLException {
         boolean result = false;
 
-        // First, check whether a some query was passed and the connection with
-        // the database.
         if (query != null && connectionIsOpen()) {
-            // Then, if succeeded, execute the query.
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            params.forEach((k, v) -> {
+                try {
+                    if (v.matches("-?\\d+")) {
+                        statement.setInt(k, Integer.parseInt(v));
+                    } else {
+                        statement.setString(k, v);
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+            System.out.println(statement);
             try {
-                statement.executeUpdate(query);
+                statement.executeUpdate();
                 result = true;
             } catch (SQLException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 result = false;
             }
         }
 
         return result;
+    }
+
+    public void executeSQLInsertStatement() {
     }
 }

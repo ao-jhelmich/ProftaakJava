@@ -1,26 +1,47 @@
 package shapes;
 
+import java.util.ArrayList;
+
 public class Sphere implements Shape {
+    private final static String type = "sphere";
+    private int id;
     private double radius;
 
     public Sphere(double radius) {
+       this(0, radius);
+    }
+
+    public Sphere(int id, double radius) {
+        this.id = id;
         this.radius = radius;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public double getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
-        this.radius = radius;
+    @Override
+    public String getType() {
+        return type;
     }
 
     public double calculateVolume() {
-        return 4/3 * Math.PI * (radius * radius * radius);
+        return (4 / 3.0) * Math.PI * (radius * radius * radius);
+    }
+
+    @Override
+    public ArrayList<String> getFormInputs() {
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add("Radius:");
+        return labels;
     }
 
     @Override
     public String toString() {
-        return "sphere:" + radius;
+        return id + ":" + type + ":" + radius;
     }
 }

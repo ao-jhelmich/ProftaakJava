@@ -1,29 +1,38 @@
 package shapes;
 
-public class Cylinder implements Shape {
-    private double radius;
+import java.util.ArrayList;
 
+public class Cylinder implements Shape {
+    private final static String type = "cylinder";
+    private int id;
+    private double radius;
     private double height;
 
     public Cylinder(double radius, double height) {
+       this(0, radius, height);
+    }
+
+    public Cylinder(int id, double radius, double height) {
+        this.id = id;
         this.radius = radius;
         this.height = height;
     }
 
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
+    public int getId() {
+        return id;
     }
 
     public double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
-        this.height = height;
+    public double getRadius() {
+        return radius;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     public double calculateVolume() {
@@ -31,7 +40,15 @@ public class Cylinder implements Shape {
     }
 
     @Override
+    public ArrayList<String> getFormInputs() {
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add("Height:");
+        labels.add("Radius:");
+        return labels;
+    }
+
+    @Override
     public String toString() {
-        return "cylinder:" + radius + ":" + height;
+        return id + ":" + type + ":" + radius + ":" + height;
     }
 }
