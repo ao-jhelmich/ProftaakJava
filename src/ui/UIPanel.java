@@ -15,15 +15,24 @@ public class UIPanel extends JPanel implements UpdatableView {
     private ShapeController shapeController;
     private EditFrame editFrame;
 
-    private JList<Shape> sphereList;
+    private SphereListPanel sphereListPanel;
     private JTextArea shapeTextArea;
     private JTextArea totalTextArea;
 
     private class SphereListPanel extends JPanel implements UpdatableView {
+        private JList<Shape> sphereList;
+
         SphereListPanel() {
             setLayout(new BorderLayout());
+            setSphereList();
+        }
 
-            sphereList = new JList(shapeController.getShapeList().toArray());
+        public JList<Shape> getSphereList() {
+            return sphereList;
+        }
+
+        public void setSphereList() {
+            this.sphereList = new JList(shapeController.getShapeList().toArray());
             sphereList.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent evt) {
                     if (evt.getClickCount() == 2) {
@@ -49,6 +58,7 @@ public class UIPanel extends JPanel implements UpdatableView {
 
         @Override
         public void updateView() {
+            setSphereList();
             invalidate();
             validate();
             repaint();
@@ -56,7 +66,7 @@ public class UIPanel extends JPanel implements UpdatableView {
     }
 
     private class ButtonPanel extends JPanel {
-        ButtonPanel(UIPanel uiPanel) {
+        ButtonPanel() {
             GroupLayout layout = new GroupLayout(this);
             setLayout(layout);
             layout.setAutoCreateGaps(true);
@@ -71,8 +81,8 @@ public class UIPanel extends JPanel implements UpdatableView {
 
             JButton deleteButton = new JButton("Delete shape");
             deleteButton.addActionListener(e -> {
-                shapeController.deleteShape(sphereList.getSelectedValue());
-                uiPanel.updateView();
+                shapeController.deleteShape(sphereListPanel.getSphereList().getSelectedValue());
+                sphereListPanel.updateView();
             });
             JButton calculateButton = new JButton("Calculate total volume");
             calculateButton.addActionListener(e -> totalTextArea.setText("" + shapeController.calculateTotalVolume()));
@@ -154,6 +164,8 @@ public class UIPanel extends JPanel implements UpdatableView {
     UIPanel(UIFrame uiFrame, ShapeController shapeController) {
         this.uiFrame = uiFrame;
         this.shapeController = shapeController;
+        SphereListPanel sphereListPanel = new SphereListPanel();
+        this.sphereListPanel = sphereListPanel;
 
         setLayout(new GridBagLayout());
         setBorder(new EmptyBorder(30, 30, 30, 30));
@@ -165,7 +177,7 @@ public class UIPanel extends JPanel implements UpdatableView {
         c.weighty = 1.0; //Take all extra space
         c.gridx = 0;
         c.gridy = 0;
-        add(new SphereListPanel(), c);
+        add(sphereListPanel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(30,0,0,0);  //Top padding
@@ -173,7 +185,7 @@ public class UIPanel extends JPanel implements UpdatableView {
         c.weighty = 0.0; //These only take their own space
         c.gridx = 0;
         c.gridy = 1;
-        add(new ButtonPanel(this), c);
+        add(new ButtonPanel(), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(30,0,0,0);  //Top padding
@@ -185,11 +197,12 @@ public class UIPanel extends JPanel implements UpdatableView {
     }
 
     public JList<Shape> getSphereList() {
-        return sphereList;
+        return sphereListPanel.getSphereList();
     }
 
     @Override
     public void updateView() {
+        sphereListPanel.updateView();
         invalidate();
         validate();
         repaint();
