@@ -42,8 +42,8 @@ public class Cone implements Shape {
     @Override
     public ArrayList<String> getFormInputs() {
         ArrayList<String> labels = new ArrayList<String>();
-        labels.add("Height:");
         labels.add("Radius:");
+        labels.add("Height:");
         return labels;
     }
 
