@@ -2,6 +2,7 @@ package datastorage.sql;
 
 import datastorage.DataStorageInterface;
 import domain.ShapeController;
+import jdk.nashorn.internal.ir.debug.JSONWriter;
 import shapes.*;
 
 import java.sql.ResultSet;
@@ -70,44 +71,98 @@ public class ShapeDAO implements DataStorageInterface {
         return shapes;
     }
 
+    private void storeShape(Shape shape) {
+        String query = "INSERT INTO shapes ";
+        HashMap<Integer, String> params = new HashMap<>();
+
+        if (shape.getType().equals("cone") || shape.getType().equals("cylinder")) {
+            query += "(type, radius, height) VALUES (?, ?, ?);";
+            params.put(1, shape.getType());
+            if (shape.getType().equals("cone")) {
+                params.put(2, "" + ((Cone) shape).getRadius());
+                params.put(3, "" + ((Cone) shape).getHeight());
+            } else {
+                params.put(2, "" + ((Cylinder) shape).getRadius());
+                params.put(3, "" + ((Cylinder) shape).getHeight());
+            }
+        } else if(shape.getType().equals("cube") || shape.getType().equals("squarePyramid")) {
+            query += "(type, length, width, height) VALUES (?, ?, ?, ?);";
+            params.put(1, shape.getType());
+            if (shape.getType().equals("cube")) {
+                params.put(2, "" + ((Cube) shape).getLength());
+                params.put(3, "" + ((Cube) shape).getWidth());
+                params.put(4, "" + ((Cube) shape).getHeight());
+            } else {
+                params.put(2, "" + ((SquarePyramid) shape).getLength());
+                params.put(3, "" + ((SquarePyramid) shape).getWidth());
+                params.put(4, "" + ((SquarePyramid) shape).getHeight());
+            }
+        } else {
+            query += "(type, radius) VALUES (?, ?);";
+            params.put(1, shape.getType());
+            params.put(2, "" + ((Sphere) shape).getRadius());
+        }
+
+        try {
+            System.out.println(connection.executeSqlDmlStatement(query, params));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateShape(Shape shape) {
+        String query = "UPDATE shapes SET ";
+        HashMap<Integer, String> params = new HashMap<>();
+
+        if (shape.getType().equals("cone") || shape.getType().equals("cylinder")) {
+            query += "type = ?, radius = ?, height = ?";
+            params.put(1, shape.getType());
+            if (shape.getType().equals("cone")) {
+                params.put(2, "" + ((Cone) shape).getRadius());
+                params.put(3, "" + ((Cone) shape).getHeight());
+                params.put(4, "" + shape.getId());
+            } else {
+                params.put(2, "" + ((Cylinder) shape).getRadius());
+                params.put(3, "" + ((Cylinder) shape).getHeight());
+                params.put(4, "" + shape.getId());
+            }
+        } else if(shape.getType().equals("cube") || shape.getType().equals("squarePyramid")) {
+            query += "type = ?, length = ?, width = ?, height = ?";
+            params.put(1, shape.getType());
+            if (shape.getType().equals("cube")) {
+                params.put(2, "" + ((Cube) shape).getLength());
+                params.put(3, "" + ((Cube) shape).getWidth());
+                params.put(4, "" + ((Cube) shape).getHeight());
+                params.put(5, "" + shape.getId());
+            } else {
+                params.put(2, "" + ((SquarePyramid) shape).getLength());
+                params.put(3, "" + ((SquarePyramid) shape).getWidth());
+                params.put(4, "" + ((SquarePyramid) shape).getHeight());
+                params.put(5, "" + shape.getId());
+            }
+        } else {
+            query += "type = ?, radius = ?";
+            params.put(1, shape.getType());
+            params.put(2, "" + ((Sphere) shape).getRadius());
+            params.put(3, "" + shape.getId());
+        }
+
+        query +=" WHERE id = ?";
+
+        try {
+            System.out.println(connection.executeSqlDmlStatement(query, params));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void writeShape(Shape shape) {
         if (connection.openConnection()) {
-            String query = "INSERT INTO shapes ";
-            HashMap<Integer, String> params = new HashMap<>();
-
-            if (shape.getType().equals("cone") || shape.getType().equals("cylinder")) {
-                query += "(type, radius, height) VALUES (?, ?, ?);";
-                params.put(1, shape.getType());
-                if (shape.getType().equals("cone")) {
-                    params.put(2, "" + ((Cone) shape).getRadius());
-                    params.put(3, "" + ((Cone) shape).getHeight());
-                } else {
-                    params.put(2, "" + ((Cylinder) shape).getRadius());
-                    params.put(3, "" + ((Cylinder) shape).getHeight());
-                }
-            } else if(shape.getType().equals("cube") || shape.getType().equals("squarePyramid")) {
-                query += "(type, length, width, height) VALUES (?, ?, ?, ?);";
-                params.put(1, shape.getType());
-                if (shape.getType().equals("cube")) {
-                    params.put(2, "" + ((Cube) shape).getLength());
-                    params.put(3, "" + ((Cube) shape).getWidth());
-                    params.put(4, "" + ((Cube) shape).getHeight());
-                } else {
-                    params.put(2, "" + ((SquarePyramid) shape).getLength());
-                    params.put(3, "" + ((SquarePyramid) shape).getWidth());
-                    params.put(4, "" + ((SquarePyramid) shape).getHeight());
-                }
+            if (shape.getId() > 0) {
+                updateShape(shape);
             } else {
-                query += "(type, radius) VALUES (?, ?);";
-                params.put(1, shape.getType());
-                params.put(2, "" + ((Sphere) shape).getRadius());
-            }
-
-            try {
-                System.out.println(connection.executeSqlDmlStatement(query, params));
-            } catch (SQLException e) {
-                e.printStackTrace();
+                storeShape(shape);
             }
 
             connection.closeConnection();

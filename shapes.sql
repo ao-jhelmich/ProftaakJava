@@ -22,7 +22,7 @@
 
 DROP TABLE IF EXISTS `shapes`;
 CREATE TABLE `shapes` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
   `radius` double DEFAULT NULL,
   `width` double DEFAULT NULL,
@@ -30,5 +30,5 @@ CREATE TABLE `shapes` (
   `length` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
