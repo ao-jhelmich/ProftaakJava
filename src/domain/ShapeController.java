@@ -67,11 +67,11 @@ public class ShapeController {
     }
 
     public Shape getShape(Shape shape, ArrayList<Component> components) {
-        StringBuilder shape = new StringBuilder("0:").append(shapeString);
+        //StringBuilder shape = new StringBuilder("0:").append(shapeString);
 
         for (Component c : components) {
             if (c instanceof JTextField) {
-                shape.append(":").append(((JTextField) c).getText());
+          //      shape.append(":").append(((JTextField) c).getText());
             }
         }
 
