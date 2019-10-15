@@ -22,7 +22,7 @@ public class ShapeController {
 
     public void setDataOption(String dataOption) {
         switch (dataOption) {
-            case "db":
+            case "sql":
                 dataStorageInterface = new ShapeDAO();
                 break;
             case "txt":

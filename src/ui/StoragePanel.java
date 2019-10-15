@@ -21,7 +21,7 @@ public class StoragePanel extends JPanel implements ActionListener {
 
         add(new Label("Choose preffered storage:"));
 
-        buttonDb = new JButton("DB");
+        buttonDb = new JButton("SQL");
         buttonDb.addActionListener(this);
         add(buttonDb);
 
@@ -37,7 +37,7 @@ public class StoragePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonDb) {
-            shapeController.setDataOption("db");
+            shapeController.setDataOption("sql");
         } else if (e.getSource() == buttonTxt) {
             shapeController.setDataOption("txt");
         } else if (e.getSource() == buttonJson) {
