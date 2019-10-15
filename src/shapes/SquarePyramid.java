@@ -50,6 +50,11 @@ public class SquarePyramid implements Shape {
         return (1.0 / 3) * length * width * height;
     }
 
+    @Override
+    public int compareTo(Shape that) {
+        return this.getId() - that.getId();
+    }
+
     @SuppressWarnings("Duplicates")
     @Override
     public ArrayList<String> getFormInputs() {

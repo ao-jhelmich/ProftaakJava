@@ -17,7 +17,14 @@ public class TextStorage implements DataStorageInterface {
     @Override
     public void writeShape(Shape shape) {
         try (Writer writer = new Writer()) {
-            writer.writeShape(shape);
+            if (shape.getId() != 0) {
+                writer.update(shape);
+            } else {
+                reader = new Reader();
+                int lastId = reader.getLastId();
+                shape.setId(lastId);
+                writer.write(shape.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

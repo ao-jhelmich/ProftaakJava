@@ -39,6 +39,11 @@ public class Sphere implements Shape {
     }
 
     @Override
+    public int compareTo(Shape that) {
+        return this.getId() - that.getId();
+    }
+
+    @Override
     public ArrayList<String> getFormInputs() {
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("Radius:");

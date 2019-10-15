@@ -24,24 +24,18 @@ public class Writer implements AutoCloseable {
         }
     }
 
-    public void writeShape(Shape shape) {
-        if (shape.getId() != 0) {
-            update(shape);
-        } else {
-            write(shape.toString());
-        }
-    }
-
     public void update(Shape shape) {
-        //TODO Update shape
         try {
             BufferedReader file = new BufferedReader(new FileReader("file.txt"));
             StringBuffer inputBuffer = new StringBuffer();
-            String line;
+            String currentLine;
 
-            while ((line = file.readLine()) != null) {
-                line = shape.toString();
-                inputBuffer.append(line);
+            while ((currentLine = file.readLine()) != null) {
+                int currentId = Integer.parseInt(currentLine.split(":", 2)[0]);
+                if (currentId == shape.getId()) {
+                    currentLine = shape.toString();
+                }
+                inputBuffer.append(currentLine);
                 inputBuffer.append('\n');
             }
             file.close();
@@ -49,36 +43,32 @@ public class Writer implements AutoCloseable {
             FileOutputStream fileOut = new FileOutputStream("file.txt");
             fileOut.write(inputBuffer.toString().getBytes());
             fileOut.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void deleteShape(Shape shape) {
-        File inputFile = new File("file.txt");
-        File tempFile = new File("temp.txt");
-
-        try (
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
-            PrintWriter printWriter = new PrintWriter(tempFile)
-        ) {
-            printWriter.write("");
+        try {
+            BufferedReader file = new BufferedReader(new FileReader("file.txt"));
+            StringBuffer inputBuffer = new StringBuffer();
             String currentLine;
 
-            while ((currentLine = bufferedReader.readLine()) != null) {
+            while ((currentLine = file.readLine()) != null) {
                 int currentId = Integer.parseInt(currentLine.split(":", 2)[0]);
                 if (currentId == shape.getId()) {
                     continue;
                 }
-                printWriter.write(currentLine + "\n");
+                inputBuffer.append(currentLine);
+                inputBuffer.append('\n');
             }
+            file.close();
 
-            if (tempFile.renameTo(inputFile)) {
-                System.out.println("Removed shape on line " + shape.getId());
-            }
-        } catch (IOException exception) {
-            exception.printStackTrace();
+            FileOutputStream fileOut = new FileOutputStream("file.txt");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

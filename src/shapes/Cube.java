@@ -50,6 +50,11 @@ public class Cube implements Shape {
         return length * width * height;
     }
 
+    @Override
+    public int compareTo(Shape that) {
+        return this.getId() - that.getId();
+    }
+
     @SuppressWarnings("Duplicates")
     @Override
     public ArrayList<String> getFormInputs() {

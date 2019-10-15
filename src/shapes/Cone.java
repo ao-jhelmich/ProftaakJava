@@ -51,6 +51,12 @@ public class Cone implements Shape {
         labels.add("Height:");
         return labels;
     }
+
+    @Override
+    public int compareTo(Shape that) {
+        return this.getId() - that.getId();
+    }
+
     public void setRadius(double radius) {
         this.radius = radius;
     }

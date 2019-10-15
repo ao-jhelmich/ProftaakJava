@@ -51,6 +51,16 @@ public class Reader implements Closeable {
         return shapes;
     }
 
+    public int getLastId() {
+        ArrayList<Shape> shapes = readAll();
+        if (shapes.size() > 0) {
+            shapes.sort(Collections.reverseOrder());
+            return shapes.get(0).getId() + 1;
+        } else {
+            return 1;
+        }
+    }
+
     @Override
     public void close() {
         reader.close();
