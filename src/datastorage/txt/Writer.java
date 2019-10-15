@@ -34,7 +34,25 @@ public class Writer implements AutoCloseable {
 
     public void update(Shape shape) {
         //TODO Update shape
+        try {
+            BufferedReader file = new BufferedReader(new FileReader("file.txt"));
+            StringBuffer inputBuffer = new StringBuffer();
+            String line;
 
+            while ((line = file.readLine()) != null) {
+                line = shape.toString();
+                inputBuffer.append(line);
+                inputBuffer.append('\n');
+            }
+            file.close();
+
+            FileOutputStream fileOut = new FileOutputStream("file.txt");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteShape(Shape shape) {
@@ -56,7 +74,6 @@ public class Writer implements AutoCloseable {
                 printWriter.write(currentLine + "\n");
             }
 
-//            inputFile.delete();
             if (tempFile.renameTo(inputFile)) {
                 System.out.println("Removed shape on line " + shape.getId());
             }
