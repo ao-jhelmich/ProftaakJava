@@ -4,16 +4,12 @@ import shapes.Shape;
 
 import java.io.*;
 
-public class Writer {
+public class Writer implements AutoCloseable {
     private PrintWriter printWriter;
 
     public void write(String value) {
         System.out.println("Added: " + value);
         printWriter.println(value);
-    }
-
-    public void closeWriter() {
-        printWriter.close();
     }
 
     public Writer() {
@@ -30,37 +26,43 @@ public class Writer {
 
     public void writeShape(Shape shape) {
         write(shape.toString());
-        closeWriter();
     }
 
     public void deleteShape(Shape shape) {
         File inputFile = new File("file.txt");
         File tempFile = new File("temp.txt");
 
-        //TODO Fix delete function
-
-        try {
+        try (
             BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
-            datastorage.txt.Writer writer = new Writer(tempFile);
-
+            PrintWriter printWriter = new PrintWriter(tempFile)
+        ) {
+            printWriter.write("");
             String currentLine;
-            int count = 0;
 
             while ((currentLine = bufferedReader.readLine()) != null) {
-                if (count == shape.getId()) continue;
-                System.out.println(count + " - " + shape.getId());
-                writer.write(currentLine);
-                count++;
+                int currentId = Integer.parseInt(currentLine.split(":", 2)[0]);
+                if (currentId == shape.getId()) {
+                    continue;
+                }
+                printWriter.write(currentLine + "\n");
             }
-            writer.closeWriter();
-            bufferedReader.close();
-            boolean success = tempFile.renameTo(inputFile);
 
-            if (success) {
+//            inputFile.delete();
+            if (tempFile.renameTo(inputFile)) {
                 System.out.println("Removed shape on line " + shape.getId());
             }
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+    }
+
+    @Override
+    public void close() {
+        try {
+            printWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
