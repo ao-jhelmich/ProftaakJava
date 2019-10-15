@@ -66,7 +66,7 @@ public class ShapeController {
         return shape;
     }
 
-    public Shape getShape(String shapeString, ArrayList<Component> components) {
+    public Shape getShape(Shape shape, ArrayList<Component> components) {
         StringBuilder shape = new StringBuilder("0:").append(shapeString);
 
         for (Component c : components) {
