@@ -35,6 +35,11 @@ public class Cone implements Shape {
         return type;
     }
 
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public double calculateVolume() {
         return (1.0 / 3) * Math.PI * (radius * radius) * height;
     }
@@ -45,6 +50,13 @@ public class Cone implements Shape {
         labels.add("Radius:");
         labels.add("Height:");
         return labels;
+    }
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     @Override

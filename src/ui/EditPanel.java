@@ -167,7 +167,6 @@ public class EditPanel extends JPanel {
                 Shape shape = shapeController.getShape(uiFrame.getUIPanel().getSphereList().getSelectedValue(), components);
                 shapeController.writeShape(shape);
 
-
                 //TODO Make sure uiPanel gets updated
 
                 System.out.println("Save");

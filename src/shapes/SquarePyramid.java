@@ -24,6 +24,11 @@ public class SquarePyramid implements Shape {
         return id;
     }
 
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public double getLength() {
         return length;
     }

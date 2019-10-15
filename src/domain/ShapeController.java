@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ShapeController {
     private DataStorageInterface dataStorageInterface;
@@ -67,15 +68,29 @@ public class ShapeController {
     }
 
     public Shape getShape(Shape shape, ArrayList<Component> components) {
-        StringBuilder shape = new StringBuilder("0:").append(shapeString);
+        int id;
+        if (shape != null) {
+            id = shape.getId();
+        } else {
+            id = 0;
+        }
+
+
+        StringBuilder shapeString = new StringBuilder().append(id).append(":");
 
         for (Component c : components) {
-            if (c instanceof JTextField) {
-                shape.append(":").append(((JTextField) c).getText());
+            if (c instanceof JComboBox) {
+                shapeString.append(((JComboBox) c).getSelectedItem().toString());
             }
         }
 
-        return getShape(shape.toString());
+        for (Component c : components) {
+            if (c instanceof JTextField) {
+                shapeString.append(":").append(((JTextField) c).getText());
+            }
+        }
+
+        return getShape(shapeString.toString());
     }
 
     public Shape getEmptyShape(String shapeString) {

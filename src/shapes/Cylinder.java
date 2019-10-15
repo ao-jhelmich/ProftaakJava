@@ -22,6 +22,11 @@ public class Cylinder implements Shape {
         return id;
     }
 
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public double getHeight() {
         return height;
     }

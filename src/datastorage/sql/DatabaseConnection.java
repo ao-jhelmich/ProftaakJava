@@ -24,7 +24,6 @@ public class DatabaseConnection {
 
         if (connection == null) {
             try {
-                // Try to create a connection with the library database
                 connection = DriverManager.getConnection(url, properties.getOrDefault("DB_USER", "root"), properties.getOrDefault("DB_PASS", ""));
 
                 if (connection != null) {
@@ -37,8 +36,15 @@ public class DatabaseConnection {
                 isConnected = false;
             }
         } else {
-            // A connection was already initialized.
             isConnected = true;
+        }
+
+        try {
+            if (connection != null && !statement.isClosed()) {
+                statement = connection.createStatement();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return isConnected;
@@ -64,9 +70,10 @@ public class DatabaseConnection {
     public void closeConnection() {
         try {
             statement.close();
-
-            // Close the connection
             connection.close();
+
+            connection = null;
+            statement = null;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,7 +122,7 @@ public class DatabaseConnection {
                     e.printStackTrace();
                 }
             });
-            System.out.println(statement);
+
             try {
                 statement.executeUpdate();
                 result = true;
@@ -126,8 +133,5 @@ public class DatabaseConnection {
         }
 
         return result;
-    }
-
-    public void executeSQLInsertStatement() {
     }
 }

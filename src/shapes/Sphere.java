@@ -20,6 +20,11 @@ public class Sphere implements Shape {
         return id;
     }
 
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public double getRadius() {
         return radius;
     }
