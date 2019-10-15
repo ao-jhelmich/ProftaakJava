@@ -88,8 +88,10 @@ public class UIPanel extends JPanel implements UpdatableView {
 
             JButton deleteButton = new JButton("Delete shape");
             deleteButton.addActionListener(e -> {
-                shapeController.deleteShape(sphereListPanel.getSphereList().getSelectedValue());
-                sphereListPanel.updateView();
+                if (! sphereListPanel.getSphereList().isSelectionEmpty()) {
+                    shapeController.deleteShape(sphereListPanel.getSphereList().getSelectedValue());
+                    sphereListPanel.updateView();
+                }
             });
             JButton calculateButton = new JButton("Calculate total volume");
             calculateButton.addActionListener(e -> totalTextArea.setText("" + shapeController.calculateTotalVolume()));
