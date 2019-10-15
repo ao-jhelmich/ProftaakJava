@@ -1,19 +1,18 @@
 package datastorage.txt;
 
-import datastorage.DataStorageInterface;
-import shapes.*;
+import shapes.Shape;
 
 import java.io.*;
 
-public class Writer implements DataStorageInterface {
+public class Writer {
     private PrintWriter printWriter;
 
-    public void write(String value){
+    public void write(String value) {
         System.out.println("Added: " + value);
         printWriter.println(value);
     }
 
-    public void closeWriter(){
+    public void closeWriter() {
         printWriter.close();
     }
 
@@ -29,21 +28,16 @@ public class Writer implements DataStorageInterface {
         }
     }
 
-    public void writeShape (Shape shape) {
-        write(shape.toString()); //TODO Check first if shape exists in file & update if necessary
+    public void writeShape(Shape shape) {
+        write(shape.toString());
         closeWriter();
     }
 
-    @Override
     public void deleteShape(Shape shape) {
-        // TODO
-    }
-
-    public Reader deleteShape(Shape shape, Reader reader) {
         File inputFile = new File("file.txt");
         File tempFile = new File("temp.txt");
 
-        reader.close(); //TODO Fix delete function & delete shape
+        //TODO Fix delete function
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
@@ -68,7 +62,5 @@ public class Writer implements DataStorageInterface {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-
-        return new datastorage.txt.Reader();
     }
 }

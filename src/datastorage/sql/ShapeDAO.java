@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ShapeDAO implements DataStorageInterface {
     private final ShapeController controller;
@@ -19,7 +18,8 @@ public class ShapeDAO implements DataStorageInterface {
         this.controller = new ShapeController();
     }
 
-    public ArrayList<Shape> all() {
+    @Override
+    public ArrayList<Shape> getAllShapes() {
         ArrayList<Shape> shapes = new ArrayList<>();
 
         if (connection.openConnection()) {
@@ -86,7 +86,7 @@ public class ShapeDAO implements DataStorageInterface {
                     params.put(2, "" + ((Cylinder) shape).getRadius());
                     params.put(3, "" + ((Cylinder) shape).getHeight());
                 }
-            } else if(shape.getType().equals("cube") || shape.getType().equals("squarePyramid")) {
+            } else if (shape.getType().equals("cube") || shape.getType().equals("squarePyramid")) {
                 query += "(type, length, width, height) VALUES (?, ?, ?, ?);";
                 params.put(1, shape.getType());
                 if (shape.getType().equals("cube")) {
