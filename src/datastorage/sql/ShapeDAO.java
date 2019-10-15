@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ShapeDAO implements DataStorageInterface {
     private final ShapeController controller;
@@ -20,7 +19,8 @@ public class ShapeDAO implements DataStorageInterface {
         this.controller = new ShapeController();
     }
 
-    public ArrayList<Shape> all() {
+    @Override
+    public ArrayList<Shape> getAllShapes() {
         ArrayList<Shape> shapes = new ArrayList<>();
 
         if (connection.openConnection()) {

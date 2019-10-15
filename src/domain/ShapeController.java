@@ -1,8 +1,8 @@
 package domain;
 
+import datastorage.DataStorageInterface;
 import datastorage.sql.ShapeDAO;
-import datastorage.txt.Reader;
-import datastorage.txt.Writer;
+import datastorage.txt.TextStorage;
 import shapes.Shape;
 import shapes.*;
 import ui.StorageFrame;
@@ -14,16 +14,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ShapeController {
-    private String dataOption;
-    private Reader reader = new Reader();
-    private Writer writer = new Writer();
+    private DataStorageInterface dataStorageInterface;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new StorageFrame(new ShapeController()));
     }
 
     public void setDataOption(String dataOption) {
-        this.dataOption = dataOption;
+        switch (dataOption) {
+            case "db":
+                dataStorageInterface = new ShapeDAO();
+                break;
+            case "txt":
+                dataStorageInterface = new TextStorage();
+                break;
+            case "json":
+                //TODO Set Json writer here
+                break;
+            default:
+                dataStorageInterface = new TextStorage();
+                break;
+        }
     }
 
     public Shape getShape(String shapeString) {
@@ -55,10 +66,10 @@ public class ShapeController {
         return shape;
     }
 
-    public Shape getShape(String shapeString, ArrayList<Component> components) {
+    public Shape getShape(Shape shape, ArrayList<Component> components) {
         StringBuilder shape = new StringBuilder("0:").append(shapeString);
 
-        for (Component c: components) {
+        for (Component c : components) {
             if (c instanceof JTextField) {
                 shape.append(":").append(((JTextField) c).getText());
             }
@@ -94,57 +105,16 @@ public class ShapeController {
         return shape;
     }
 
+    public ArrayList<Shape> getShapeList() {
+        return dataStorageInterface.getAllShapes();
+    }
+
     public void writeShape(Shape shape) {
-        System.out.println(shape);
-        if (dataOption != null) {
-            switch (dataOption) {
-                case "db":
-                    new ShapeDAO().writeShape(shape);
-                    // Todo reload list of all shapes
-                    break;
-                case "txt":
-                    writer.writeShape(shape);
-                    break;
-                case "json":
-                    //TODO Implement write to json here
-                    break;
-            }
-        }
+        dataStorageInterface.writeShape(shape);
     }
 
     public void deleteShape(Shape shape) {
-        if (dataOption != null) {
-            switch (dataOption) {
-                case "db":
-                    new ShapeDAO().deleteShape(shape);
-                    break;
-                case "txt":
-                    reader = writer.deleteShape(shape, reader);
-                    break;
-                case "json":
-                    //TODO Implement delete from json here
-                    break;
-            }
-        }
-    }
-
-    public ArrayList<Shape> getShapeList() {
-        if (dataOption != null) {
-            switch (dataOption) {
-                case "db":
-                    return new ShapeDAO().all();
-                case "txt":
-                    reader = new Reader();
-                    return reader.readAll();
-                case "json":
-                    //TODO Implement get all Shapes from json here
-                    return new ArrayList<>();
-                default:
-                    return new ArrayList<>();
-            }
-        } else {
-            return new ArrayList<>();
-        }
+        dataStorageInterface.deleteShape(shape);
     }
 
     public double calculateTotalVolume() {

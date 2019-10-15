@@ -163,8 +163,10 @@ public class EditPanel extends JPanel {
             buttonSave.addActionListener(e -> {
                 ArrayList<Component> components = new ArrayList<>();
                 components.addAll(Arrays.asList(inputPanel.getComponents()));
-                Shape shape = shapeController.getShape(shapeBox.getSelectedItem().toString(), components);
+                components.add(shapeBox);
+                Shape shape = shapeController.getShape(uiFrame.getUIPanel().getSphereList().getSelectedValue(), components);
                 shapeController.writeShape(shape);
+
 
                 //TODO Make sure uiPanel gets updated
 

@@ -184,6 +184,10 @@ public class UIPanel extends JPanel implements UpdatableView {
         add(new ResultPanel(), c);
     }
 
+    public JList<Shape> getSphereList() {
+        return sphereList;
+    }
+
     @Override
     public void updateView() {
         invalidate();
