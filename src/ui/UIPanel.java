@@ -20,19 +20,25 @@ public class UIPanel extends JPanel implements UpdatableView {
     private JTextArea totalTextArea;
 
     private class SphereListPanel extends JPanel implements UpdatableView {
-        private JList<Shape> sphereList;
+        private JScrollPane scrollPane;
 
         SphereListPanel() {
             setLayout(new BorderLayout());
-            setSphereList();
+            scrollPane = new JScrollPane();
+            scrollPane.setViewportView(addNewSphereList());
+            add(scrollPane);
         }
 
         public JList<Shape> getSphereList() {
-            return sphereList;
+            return (JList<Shape>) scrollPane.getViewport().getView();
         }
 
         public void setSphereList() {
-            this.sphereList = new JList(shapeController.getShapeList().toArray());
+            scrollPane.setViewportView(addNewSphereList());
+        }
+
+        private JList<Shape> addNewSphereList() {
+            JList<Shape> sphereList = new JList(shapeController.getShapeList().toArray());
             sphereList.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent evt) {
                     if (evt.getClickCount() == 2) {
@@ -47,13 +53,14 @@ public class UIPanel extends JPanel implements UpdatableView {
             sphereList.addListSelectionListener(e -> {
                 if (!e.getValueIsAdjusting()) {
                     Shape selectedShape = sphereList.getSelectedValue();
-                    shapeTextArea.setText("" + (double) Math.round(selectedShape.calculateVolume() * 100) / 100);
+                    if (selectedShape != null) {
+                        shapeTextArea.setText("" + (double) Math.round(selectedShape.calculateVolume() * 100) / 100);
+                    } else {
+                        System.out.println("Selected shape not found");
+                    }
                 }
             });
-
-            JScrollPane scrollPane = new JScrollPane();
-            scrollPane.setViewportView(sphereList);
-            add(scrollPane);
+            return sphereList;
         }
 
         @Override
@@ -203,8 +210,5 @@ public class UIPanel extends JPanel implements UpdatableView {
     @Override
     public void updateView() {
         sphereListPanel.updateView();
-        invalidate();
-        validate();
-        repaint();
     }
 }
