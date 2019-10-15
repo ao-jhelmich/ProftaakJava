@@ -16,6 +16,7 @@ public class EditPanel extends JPanel {
     private UIFrame uiFrame;
     private EditFrame editFrame;
     private ShapeController shapeController;
+    private Shape currentShape;
 
     private JComboBox shapeBox;
     private InputPanel inputPanel;
@@ -164,7 +165,7 @@ public class EditPanel extends JPanel {
                 ArrayList<Component> components = new ArrayList<>();
                 components.addAll(Arrays.asList(inputPanel.getComponents()));
                 components.add(shapeBox);
-                Shape shape = shapeController.getShape(uiFrame.getUIPanel().getSphereList().getSelectedValue(), components);
+                Shape shape = shapeController.getShape(currentShape, components);
                 shapeController.writeShape(shape);
 
                 uiFrame.getUIPanel().updateView();
@@ -201,6 +202,7 @@ public class EditPanel extends JPanel {
         this.editFrame = editFrame;
         this.shapeController = shapeController;
         this.inputPanel = new InputPanel();
+        this.currentShape = shape;
 
         setLayout(new GridBagLayout());
         setBorder(new EmptyBorder(30, 30, 30, 30));

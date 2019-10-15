@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class TextStorage implements DataStorageInterface {
     private Reader reader = new Reader();
-    private Writer writer = new Writer();
 
     @Override
     public ArrayList<Shape> getAllShapes() {
@@ -17,14 +16,23 @@ public class TextStorage implements DataStorageInterface {
 
     @Override
     public void writeShape(Shape shape) {
-        //Check if shape exists
-        writer.writeShape(shape);
+        try (Writer writer = new Writer()) {
+            writer.writeShape(shape);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteShape(Shape shape) {
         reader.close();
-        writer.deleteShape(shape);
+
+        try (Writer writer = new Writer()) {
+            writer.deleteShape(shape);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         reader = new Reader();
     }
 }

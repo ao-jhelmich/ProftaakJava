@@ -25,7 +25,16 @@ public class Writer implements AutoCloseable {
     }
 
     public void writeShape(Shape shape) {
-        write(shape.toString());
+        if (shape.getId() != 0) {
+            update(shape);
+        } else {
+            write(shape.toString());
+        }
+    }
+
+    public void update(Shape shape) {
+        //TODO Update shape
+
     }
 
     public void deleteShape(Shape shape) {

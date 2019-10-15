@@ -75,7 +75,6 @@ public class ShapeController {
             id = 0;
         }
 
-
         StringBuilder shapeString = new StringBuilder().append(id).append(":");
 
         for (Component c : components) {
