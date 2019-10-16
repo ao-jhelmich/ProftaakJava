@@ -8,7 +8,6 @@ public interface Shape extends Comparable<Shape> {
     String getType();
     double calculateVolume();
     ArrayList<String> getFormInputs();
-
-    @Override
     int compareTo(Shape that);
+    String toJsonString();
 }

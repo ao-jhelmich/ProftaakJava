@@ -69,4 +69,7 @@ public class Cone implements Shape {
     public String toString() {
         return id + ":" + type + ":" + radius + ":" + height;
     }
+
+    @Override
+    public String toJsonString() { return "{ \"id\":" + id + ", \"type\":\"" + type + "\", \"radius\":" + radius + ", \"height\":" + height + "}"; }
 }

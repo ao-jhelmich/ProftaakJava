@@ -1,6 +1,7 @@
 package domain;
 
 import datastorage.DataStorageInterface;
+import datastorage.json.JsonStorage;
 import datastorage.sql.ShapeDAO;
 import datastorage.txt.TextStorage;
 import shapes.Shape;
@@ -30,6 +31,7 @@ public class ShapeController {
                 break;
             case "json":
                 //TODO Set Json writer here
+                dataStorageInterface = new JsonStorage();
                 break;
             default:
                 dataStorageInterface = new TextStorage();
