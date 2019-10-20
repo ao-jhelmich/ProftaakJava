@@ -30,7 +30,6 @@ public class ShapeController {
                 dataStorageInterface = new TextStorage();
                 break;
             case "json":
-                //TODO Set Json writer here
                 dataStorageInterface = new JsonStorage();
                 break;
             default:

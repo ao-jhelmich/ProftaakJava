@@ -2,30 +2,34 @@ package datastorage.json;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import shapes.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Reader implements Closeable {
 
-    File file = new File("file.json");
+//    public Reader(){
+//
+//    }
+
+    File file;
     private Scanner reader;
-    private JsonReader jsonReader;
 
     public ArrayList<Shape> readAll() throws FileNotFoundException {
+        this.file = new File("file.json");
         ArrayList<Shape> shapes = new ArrayList<>();
-        JsonObject jsonObject;
 
-        reader = new Scanner(this.file);
+        this.reader = new Scanner(this.file);
 
-        this.jsonReader = new JsonReader(new FileReader(this.file));
         while(reader.hasNextLine()){
-            jsonObject = new Gson().fromJson(reader.nextLine(), JsonObject.class);
+            JsonObject jsonObject = new Gson().fromJson(reader.nextLine(), JsonObject.class);
             shapes.add(convertToShape(jsonObject));
         }
+
+        this.reader.close();
 
         return shapes;
     }
@@ -34,36 +38,46 @@ public class Reader implements Closeable {
         Shape shape = null;
 
         System.out.println(jsonObject);
-//        Integer id = jsonObject.get("id").isJsonNull() ? jsonObject.get("id").getAsInt();
-        String type = jsonObject.get("type").getAsString();
-        Double length = jsonObject.get("length") == null ? -1 : jsonObject.get("length").getAsDouble();
-        Double width = jsonObject.get("width") == null ? -1 : jsonObject.get("width").getAsDouble();
-        Double height = jsonObject.get("height") == null ? -1 : jsonObject.get("height").getAsDouble();
-        Double radius = jsonObject.get("radius") == null ? -1 : jsonObject.get("radius").getAsDouble();
+        int id = jsonObject.get("id") == null ? -1 : jsonObject.get("id").getAsInt();
+        String type = jsonObject.get("type") == null ? null : jsonObject.get("type").getAsString();
+        double length = jsonObject.get("length") == null ? -1 : jsonObject.get("length").getAsDouble();
+        double width = jsonObject.get("width") == null ? -1 : jsonObject.get("width").getAsDouble();
+        double height = jsonObject.get("height") == null ? -1 : jsonObject.get("height").getAsDouble();
+        double radius = jsonObject.get("radius") == null ? -1 : jsonObject.get("radius").getAsDouble();
 
         switch(type){
             case "cone":
-                shape = new Cone(radius, height);
+                shape = new Cone(id, radius, height);
                 break;
             case "cube":
-                shape = new Cube(length, width, height);
+                shape = new Cube(id, length, width, height);
                 break;
             case "cylinder":
-                shape = new Cylinder(radius, height);
+                shape = new Cylinder(id, radius, height);
                 break;
             case "sphere":
-                shape = new Sphere(radius);
+                shape = new Sphere(id, radius);
                 break;
             case "squarePyramid":
-                shape = new SquarePyramid(length, width, height);
+                shape = new SquarePyramid(id, length, width, height);
                 break;
         }
 
         return shape;
     }
 
+    public int getLastId() throws FileNotFoundException {
+        ArrayList<Shape> shapes = this.readAll();
+        if (shapes.size() > 0) {
+            shapes.sort(Collections.reverseOrder());
+            return shapes.get(0).getId() + 1;
+        } else {
+            return 1;
+        }
+    }
+
     @Override
-    public void close() throws IOException {
-        this.jsonReader.close();
+    public void close() {
+//        this.reader.close();
     }
 }
