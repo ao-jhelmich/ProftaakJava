@@ -1,3 +1,1 @@
-{ "id":2, "type":"cone", "radius":1.0, "height":1.0}
-{ "id":3, "type":"squarePyramid", "length":2.0, "width": 1.0, "height":4.0}
-{ "id":4, "type":"cone", "radius":2.0, "height":2.0}
+{ "id":1, "type":"cylinder", "radius": 2.0, "height":2.0}

@@ -11,8 +11,8 @@ public class Writer implements AutoCloseable {
     private PrintWriter printWriter;
 
     public Writer() {
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter(this.file, true))) {
-            this.printWriter = printWriter;
+        try {
+            this.printWriter = new PrintWriter(new FileWriter(this.file, true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,10 +44,8 @@ public class Writer implements AutoCloseable {
     }
 
     public void write(String value) {
-        if (printWriter != null) {
-            System.out.println("Added: " + value);
-            printWriter.println(value);
-        }
+        System.out.println("Added: " + value);
+        printWriter.println(value);
     }
 
     @Override
