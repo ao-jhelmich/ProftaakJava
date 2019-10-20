@@ -1,1 +1,2 @@
-{ "id":1, "type":"cylinder", "radius": 2.0, "height":2.0}
+{ "id":2, "type":"sphere", "radius":6.0}
+{ "id":3, "type":"squarePyramid", "length":9.0, "width": 7.0, "height":5.0}

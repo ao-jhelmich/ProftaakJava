@@ -12,13 +12,16 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class JsonStorage implements DataStorageInterface {
-
     private Reader reader;
+
+    public JsonStorage() {
+        this.reader = new Reader();
+    }
 
     @Override
     public ArrayList<Shape> getAllShapes() {
         try {
-            return new Reader().readAll();
+            return reader.readAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,7 +48,7 @@ public class JsonStorage implements DataStorageInterface {
     @Override
     public void deleteShape(Shape shape) {
         try (BufferedReader file = new BufferedReader(new FileReader("file.json"))) {
-            StringBuffer inputBuffer = new StringBuffer();
+            StringBuilder inputBuffer = new StringBuilder();
             String currentLine;
 
             while ((currentLine = file.readLine()) != null) {
