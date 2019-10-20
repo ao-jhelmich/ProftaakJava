@@ -7,11 +7,15 @@ import shapes.Shape;
 import java.io.*;
 
 public class Writer implements AutoCloseable {
-    File file = new File("file.json");
-    PrintWriter printWriter;
+    private File file = new File("file.json");
+    private PrintWriter printWriter;
 
-    public Writer() throws FileNotFoundException {
-        this.printWriter = new PrintWriter(this.file);
+    public Writer() {
+        try {
+            this.printWriter = new PrintWriter(new FileWriter(this.file, true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update(Shape shape) {
@@ -42,11 +46,15 @@ public class Writer implements AutoCloseable {
 
     public void write(String value) {
         System.out.println("Added: " + value);
-        printWriter.append(value);
+        printWriter.println(value);
     }
 
     @Override
     public void close() {
-        this.printWriter.close();
+        try {
+            printWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

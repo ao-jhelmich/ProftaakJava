@@ -11,25 +11,19 @@ import java.util.Scanner;
 
 public class Reader implements Closeable {
 
-//    public Reader(){
-//
-//    }
-
-    File file;
     private Scanner reader;
 
     public ArrayList<Shape> readAll() throws FileNotFoundException {
-        this.file = new File("file.json");
+        File file = new File("file.json");
         ArrayList<Shape> shapes = new ArrayList<>();
-
-        this.reader = new Scanner(this.file);
+        this.reader = new Scanner(new FileReader(file));
 
         while(reader.hasNextLine()){
             JsonObject jsonObject = new Gson().fromJson(reader.nextLine(), JsonObject.class);
             shapes.add(convertToShape(jsonObject));
         }
 
-        this.reader.close();
+        reader.close();
 
         return shapes;
     }
@@ -78,6 +72,6 @@ public class Reader implements Closeable {
 
     @Override
     public void close() {
-//        this.reader.close();
+        this.reader.close();
     }
 }
