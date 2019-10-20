@@ -1,17 +1,16 @@
 package datastorage.json;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import datastorage.DataStorageInterface;
 import shapes.Shape;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 public class JsonStorage implements DataStorageInterface {
-    File file = new File("file.json");
-//    FileWriter fileWriter = new FileWriter(file);
-    Reader reader;
+
+    private Reader reader;
 
     @Override
     public ArrayList<Shape> getAllShapes() {
@@ -44,6 +43,26 @@ public class JsonStorage implements DataStorageInterface {
 
     @Override
     public void deleteShape(Shape shape) {
+        try {
+            BufferedReader file = new BufferedReader(new FileReader("file.json"));
+            StringBuffer inputBuffer = new StringBuffer();
+            String currentLine;
 
+            while ((currentLine = file.readLine()) != null) {
+                int currentId = new Gson().fromJson(currentLine, JsonObject.class).get("id").getAsInt();
+                if (currentId == shape.getId()) {
+                    continue;
+                }
+                inputBuffer.append(currentLine);
+                inputBuffer.append('\n');
+            }
+            file.close();
+
+            FileOutputStream fileOut = new FileOutputStream("file.json");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
