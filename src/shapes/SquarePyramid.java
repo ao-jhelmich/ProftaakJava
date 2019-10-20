@@ -71,5 +71,7 @@ public class SquarePyramid implements Shape {
     }
 
     @Override
-    public String toJsonString() { return "{ \"id\":" + id + ", \"type\":\"" + type + "\", \"length\":" + length + ", \"width\": " + width + ", \"height\":" + height + "}";}
+    public String toJsonString() {
+        return "{ \"id\":" + id + ", \"type\":\"" + type + "\", \"length\":" + length + ", \"width\": " + width + ", \"height\":" + height + "}";
+    }
 }

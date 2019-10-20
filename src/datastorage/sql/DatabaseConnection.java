@@ -20,7 +20,7 @@ public class DatabaseConnection {
         Reader reader = new Reader(new File("./conf.properties"));
 
         HashMap<String, String> properties = reader.readProperties();
-        String url = "jdbc:mysql://"+ properties.getOrDefault("DB_HOST", "localhost") +"/"+ properties.getOrDefault("DB_NAME", "proftaakjava") +"?" + properties.getOrDefault("DB_OPTIONS", "serverTimezone=UTC");
+        String url = "jdbc:mysql://" + properties.getOrDefault("DB_HOST", "localhost") + "/" + properties.getOrDefault("DB_NAME", "proftaakjava") + "?" + properties.getOrDefault("DB_OPTIONS", "serverTimezone=UTC");
 
         if (connection == null) {
             try {
@@ -99,7 +99,8 @@ public class DatabaseConnection {
 
     /**
      * Dml: data manipulation language
-     * @param query The SQL query that will be executed
+     *
+     * @param query  The SQL query that will be executed
      * @param params
      * @return true if execution of the SQL statement was successful, false
      * otherwise.

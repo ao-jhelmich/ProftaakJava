@@ -1,7 +1,7 @@
 package datastorage.txt;
 
 import domain.ShapeController;
-import shapes.*;
+import shapes.Shape;
 
 import java.io.Closeable;
 import java.io.File;
@@ -26,7 +26,7 @@ public class Reader implements Closeable {
     public HashMap<String, String> readProperties() {
         HashMap<String, String> properties = new HashMap<>();
 
-        while(reader.hasNextLine()) {
+        while (reader.hasNextLine()) {
             String prop = reader.nextLine();
             List<String> parts = new ArrayList<>(Arrays.asList(prop.split("=", 2)));
 
@@ -44,7 +44,7 @@ public class Reader implements Closeable {
         ArrayList<Shape> shapes = new ArrayList<>();
         ShapeController shapeController = new ShapeController();
 
-        while(reader.hasNextLine()) {
+        while (reader.hasNextLine()) {
             shapes.add(shapeController.getShape(reader.nextLine()));
         }
 

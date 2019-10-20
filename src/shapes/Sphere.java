@@ -8,7 +8,7 @@ public class Sphere implements Shape {
     private double radius;
 
     public Sphere(double radius) {
-       this(0, radius);
+        this(0, radius);
     }
 
     public Sphere(int id, double radius) {
@@ -56,5 +56,7 @@ public class Sphere implements Shape {
     }
 
     @Override
-    public String toJsonString() { return "{ \"id\":" + id + ", \"type\":\"" + type + "\", \"radius\":" + radius + "}";}
+    public String toJsonString() {
+        return "{ \"id\":" + id + ", \"type\":\"" + type + "\", \"radius\":" + radius + "}";
+    }
 }

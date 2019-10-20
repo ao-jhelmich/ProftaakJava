@@ -16,7 +16,7 @@ public class StoragePanel extends JPanel implements ActionListener {
 
     StoragePanel(ShapeController shapeController) {
         this.shapeController = shapeController;
-        setLayout(new GridLayout(4, 1, 0,10));
+        setLayout(new GridLayout(4, 1, 0, 10));
         setBorder(new EmptyBorder(30, 30, 30, 30));
 
         add(new Label("Choose preffered storage:"));

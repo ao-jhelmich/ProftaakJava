@@ -88,7 +88,7 @@ public class UIPanel extends JPanel implements UpdatableView {
 
             JButton deleteButton = new JButton("Delete shape");
             deleteButton.addActionListener(e -> {
-                if (! sphereListPanel.getSphereList().isSelectionEmpty()) {
+                if (!sphereListPanel.getSphereList().isSelectionEmpty()) {
                     shapeController.deleteShape(sphereListPanel.getSphereList().getSelectedValue());
                     sphereListPanel.updateView();
                 }
@@ -97,21 +97,21 @@ public class UIPanel extends JPanel implements UpdatableView {
             calculateButton.addActionListener(e -> totalTextArea.setText("" + shapeController.calculateTotalVolume()));
 
             layout.setHorizontalGroup(
-                layout.createSequentialGroup()
-                    .addComponent(addButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deleteButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(calculateButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    layout.createSequentialGroup()
+                            .addComponent(addButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(deleteButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(calculateButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             );
             layout.setVerticalGroup(
-                layout.createSequentialGroup()
-                    .addGroup(
-                        layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(addButton)
-                            .addComponent(deleteButton)
-                            .addComponent(calculateButton)
-                    )
+                    layout.createSequentialGroup()
+                            .addGroup(
+                                    layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(addButton)
+                                            .addComponent(deleteButton)
+                                            .addComponent(calculateButton)
+                            )
             );
 
             layout.linkSize(SwingConstants.HORIZONTAL, addButton, deleteButton, calculateButton);
@@ -139,31 +139,31 @@ public class UIPanel extends JPanel implements UpdatableView {
             totalTextArea.setDisabledTextColor(Color.black);
 
             layout.setHorizontalGroup(
-                layout.createSequentialGroup()
-                .addGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(shapeLabel, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(shapeTextArea, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                )
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(totalLabel, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(totalTextArea, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                )
+                    layout.createSequentialGroup()
+                            .addGroup(
+                                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                            .addComponent(shapeLabel, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(shapeTextArea, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            )
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(
+                                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                            .addComponent(totalLabel, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(totalTextArea, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            )
             );
             layout.setVerticalGroup(
-                layout.createSequentialGroup()
-                .addGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(shapeLabel)
-                    .addComponent(totalLabel)
-                )
-                .addGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(shapeTextArea)
-                    .addComponent(totalTextArea)
-                )
+                    layout.createSequentialGroup()
+                            .addGroup(
+                                    layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(shapeLabel)
+                                            .addComponent(totalLabel)
+                            )
+                            .addGroup(
+                                    layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(shapeTextArea)
+                                            .addComponent(totalTextArea)
+                            )
             );
 
             //layout.linkSize(SwingConstants.HORIZONTAL, shapeTextArea, totalTextArea);
@@ -189,7 +189,7 @@ public class UIPanel extends JPanel implements UpdatableView {
         add(sphereListPanel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(30,0,0,0);  //Top padding
+        c.insets = new Insets(30, 0, 0, 0);  //Top padding
         c.weightx = 1.0;
         c.weighty = 0.0; //These only take their own space
         c.gridx = 0;
@@ -197,7 +197,7 @@ public class UIPanel extends JPanel implements UpdatableView {
         add(new ButtonPanel(), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(30,0,0,0);  //Top padding
+        c.insets = new Insets(30, 0, 0, 0);  //Top padding
         c.weightx = 1.0;
         c.weighty = 0.0; //These only take their own space
         c.gridx = 0;

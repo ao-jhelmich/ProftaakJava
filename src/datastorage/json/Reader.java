@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import shapes.*;
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -18,7 +21,7 @@ public class Reader implements Closeable {
         ArrayList<Shape> shapes = new ArrayList<>();
         this.reader = new Scanner(new FileReader(file));
 
-        while(reader.hasNextLine()){
+        while (reader.hasNextLine()) {
             JsonObject jsonObject = new Gson().fromJson(reader.nextLine(), JsonObject.class);
             shapes.add(convertToShape(jsonObject));
         }
@@ -28,7 +31,7 @@ public class Reader implements Closeable {
         return shapes;
     }
 
-    private Shape convertToShape(JsonObject jsonObject){
+    private Shape convertToShape(JsonObject jsonObject) {
         Shape shape = null;
 
         System.out.println(jsonObject);
@@ -39,7 +42,7 @@ public class Reader implements Closeable {
         double height = jsonObject.get("height") == null ? -1 : jsonObject.get("height").getAsDouble();
         double radius = jsonObject.get("radius") == null ? -1 : jsonObject.get("radius").getAsDouble();
 
-        switch(type){
+        switch (type) {
             case "cone":
                 shape = new Cone(id, radius, height);
                 break;

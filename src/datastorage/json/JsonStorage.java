@@ -5,7 +5,10 @@ import com.google.gson.JsonObject;
 import datastorage.DataStorageInterface;
 import shapes.Shape;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 public class JsonStorage implements DataStorageInterface {
@@ -16,7 +19,7 @@ public class JsonStorage implements DataStorageInterface {
     public ArrayList<Shape> getAllShapes() {
         try {
             return new Reader().readAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

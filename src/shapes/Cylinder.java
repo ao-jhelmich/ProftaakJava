@@ -9,7 +9,7 @@ public class Cylinder implements Shape {
     private double height;
 
     public Cylinder(double radius, double height) {
-       this(0, radius, height);
+        this(0, radius, height);
     }
 
     public Cylinder(int id, double radius, double height) {
@@ -63,5 +63,7 @@ public class Cylinder implements Shape {
     }
 
     @Override
-    public String toJsonString() { return "{ \"id\":" + id + ", \"type\":\"" + type + "\", \"radius\": " + radius + ", \"height\":" + height + "}";}
+    public String toJsonString() {
+        return "{ \"id\":" + id + ", \"type\":\"" + type + "\", \"radius\": " + radius + ", \"height\":" + height + "}";
+    }
 }
