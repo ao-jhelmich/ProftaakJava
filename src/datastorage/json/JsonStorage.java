@@ -24,8 +24,7 @@ public class JsonStorage implements DataStorageInterface {
 
     @Override
     public void writeShape(Shape shape) {
-        try {
-            Writer writer = new Writer();
+        try (Writer writer = new Writer()) {
             if (shape.getId() != 0) {
                 writer.update(shape);
             } else {
@@ -34,7 +33,6 @@ public class JsonStorage implements DataStorageInterface {
                 shape.setId(lastId);
                 writer.write(shape.toJsonString());
             }
-            writer.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -43,8 +41,7 @@ public class JsonStorage implements DataStorageInterface {
 
     @Override
     public void deleteShape(Shape shape) {
-        try {
-            BufferedReader file = new BufferedReader(new FileReader("file.json"));
+        try (BufferedReader file = new BufferedReader(new FileReader("file.json"))) {
             StringBuffer inputBuffer = new StringBuffer();
             String currentLine;
 

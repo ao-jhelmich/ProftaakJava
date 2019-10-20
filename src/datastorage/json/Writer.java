@@ -11,16 +11,15 @@ public class Writer implements AutoCloseable {
     private PrintWriter printWriter;
 
     public Writer() {
-        try {
-            this.printWriter = new PrintWriter(new FileWriter(this.file, true));
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter(this.file, true))) {
+            this.printWriter = printWriter;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void update(Shape shape) {
-        try {
-            BufferedReader file = new BufferedReader(new FileReader(this.file));
+        try (BufferedReader file = new BufferedReader(new FileReader(this.file))) {
             StringBuilder inputBuffer = new StringBuilder();
             String currentLine;
             JsonObject jsonObject;
@@ -45,8 +44,10 @@ public class Writer implements AutoCloseable {
     }
 
     public void write(String value) {
-        System.out.println("Added: " + value);
-        printWriter.println(value);
+        if (printWriter != null) {
+            System.out.println("Added: " + value);
+            printWriter.println(value);
+        }
     }
 
     @Override
